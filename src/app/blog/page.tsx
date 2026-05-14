@@ -26,7 +26,7 @@ const LIST_QUERY = groq`*[_type == "article" && defined(publishedAt)
   publishedAt, body
 }`
 
-type Category = { _id: string; name: string; slug: string }
+type Category = { _id: string; name: string; slug: string; description?: string }
 
 // Wrappers to bypass next-sanity v9 strict overload typing.
 // Casting outside the component body avoids SWC parsing confusion.
@@ -161,7 +161,4 @@ export default async function BlogListPage({
             </Link>
           </div>
         )}
-      </section>
-    </>
-  )
-}
+      </s
