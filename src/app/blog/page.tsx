@@ -146,4 +146,22 @@ export default async function BlogListPage({
             ))}
           </div>
         ) : (
-          <div className="bg-cream border border-dashed border-gold/40 rounded-lg py-16 text-cent
+          <div className="bg-cream border border-dashed border-gold/40 rounded-lg py-16 text-center">
+            <p className="text-navy text-lg mb-2">這個分類還沒有文章</p>
+            <p className="text-sm text-woodLight mb-6">
+              {activeCategory
+                ? '香董正在準備這個主題的內容'
+                : '香董正在錄製第一批文章'}
+            </p>
+            <Link
+              href="/line"
+              className="inline-flex items-center gap-2 bg-lineGreen text-white px-5 py-2.5 rounded-md text-sm font-medium"
+            >
+              先加 LINE，新文章上架第一個通知你 →
+            </Link>
+          </div>
+        )}
+      </section>
+    </>
+  )
+}
