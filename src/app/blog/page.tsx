@@ -1,13 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { sanityClient } from '@/lib/sanity/client'
-import {
-  ALL_CATEGORIES_QUERY,
-  HOME_ARTICLES_QUERY,
-} from '@/lib/sanity/queries'
 import { groq } from 'next-sanity'
+
+import { sanityClient } from '@/lib/sanity/client'
+import { ALL_CATEGORIES_QUERY } from '@/lib/sanity/queries'
 import { ArticleCard, type ArticleCardData } from '@/components/ArticleCard'
-import { Breadcrumb } from '@/components/Breadcrumb'
+import { Breadcrumb, type BreadcrumbItem } from '@/components/Breadcrumb'
 import { estimateReadingMinutes } from '@/lib/readingTime'
 
 export const revalidate = 300
@@ -28,7 +26,29 @@ const LIST_QUERY = groq`*[_type == "article" && defined(publishedAt)
   publishedAt, body
 }`
 
-type Categories = Array<{ _id: string; name: string; slug: string }>
+type Category = { _id: string; name: string; slug: string }
+
+// Wrappers to bypass next-sanity v9 strict overload typing.
+// Casting outside the component body avoids SWC parsing confusion.
+async function fetchArticles(topic: string, tag: string): Promise<ArticleCardData[]> {
+  try {
+    const client = sanityClient as any
+    const res = await client.fetch(LIST_QUERY, { topic, tag })
+    return (res as ArticleCardData[]) || []
+  } catch {
+    return []
+  }
+}
+
+async function fetchCategories(): Promise<Category[]> {
+  try {
+    const client = sanityClient as any
+    const res = await client.fetch(ALL_CATEGORIES_QUERY)
+    return (res as Category[]) || []
+  } catch {
+    return []
+  }
+}
 
 export default async function BlogListPage({
   searchParams,
@@ -39,34 +59,38 @@ export default async function BlogListPage({
   const topic = sp.topic || ''
   const tag = sp.tag || ''
 
-  const [articles, categories] = (await Promise.all([
-    (sanityClient as any).fetch(LIST_QUERY, { topic, tag }).catch(() => []),
-    (sanityClient as any).fetch(ALL_CATEGORIES_QUERY).catch(() => []),
-  ])) as [ArticleCardData[], Categories]
+  const [articles, categories] = await Promise.all([
+    fetchArticles(topic, tag),
+    fetchCategories(),
+  ])
 
   const activeCategory = categories.find((c) => c.slug === topic)
-  const heading = activeCategory
-    ? activeCategory.name
-    : tag
-      ? `#${tag}`
-      : '香董文章'
+  let heading = '香董文章'
+  if (activeCategory) heading = activeCategory.name
+  else if (tag) heading = '#' + tag
+
+  // Pre-build breadcrumb items to avoid inline conditional spreads inside JSX
+  const breadcrumb: BreadcrumbItem[] = [
+    { label: '首頁', href: '/' },
+    { label: '文章', href: '/blog' },
+  ]
+  if (activeCategory) {
+    breadcrumb.push({ label: activeCategory.name })
+  } else if (tag) {
+    breadcrumb.push({ label: '#' + tag })
+  }
+
+  const headerLabel = activeCategory ? 'Category' : tag ? 'Tag' : 'Articles'
 
   return (
     <>
       <div className="container-x pt-6 pb-2">
-        <Breadcrumb
-          items={[
-            { label: '首頁', href: '/' },
-            { label: '文章', href: '/blog' },
-            ...(activeCategory ? [{ label: activeCategory.name }] : []),
-            ...(tag && !activeCategory ? [{ label: `#${tag}` }] : []),
-          ]}
-        />
+        <Breadcrumb items={breadcrumb} />
       </div>
 
       <header className="container-x pt-4 pb-8">
         <p className="text-xs tracking-[3px] text-gold uppercase mb-2">
-          {activeCategory ? 'Category' : tag ? 'Tag' : 'Articles'}
+          {headerLabel}
         </p>
         <h1 className="font-serif text-3xl md:text-4xl text-navy mb-4">
           {heading}
@@ -78,28 +102,29 @@ export default async function BlogListPage({
         )}
       </header>
 
-      {/* 分類篩選列 */}
       <div className="container-x pb-8">
         <div className="flex flex-wrap gap-2">
           <Link
             href="/blog"
-            className={`text-sm px-4 py-1.5 rounded-full border transition ${
-              !topic && !tag
+            className={
+              'text-sm px-4 py-1.5 rounded-full border transition ' +
+              (!topic && !tag
                 ? 'bg-navy text-white border-navy'
-                : 'border-gold/30 text-wood hover:border-gold'
-            }`}
+                : 'border-gold/30 text-wood hover:border-gold')
+            }
           >
             全部
           </Link>
           {categories.map((c) => (
             <Link
               key={c._id}
-              href={`/blog?topic=${c.slug}`}
-              className={`text-sm px-4 py-1.5 rounded-full border transition ${
-                topic === c.slug
+              href={'/blog?topic=' + c.slug}
+              className={
+                'text-sm px-4 py-1.5 rounded-full border transition ' +
+                (topic === c.slug
                   ? 'bg-navy text-white border-navy'
-                  : 'border-gold/30 text-wood hover:border-gold'
-              }`}
+                  : 'border-gold/30 text-wood hover:border-gold')
+              }
             >
               {c.name}
             </Link>
@@ -121,20 +146,4 @@ export default async function BlogListPage({
             ))}
           </div>
         ) : (
-          <div className="bg-cream border border-dashed border-gold/40 rounded-lg py-16 text-center">
-            <p className="text-navy text-lg mb-2">這個分類還沒有文章</p>
-            <p className="text-sm text-woodLight mb-6">
-              {activeCategory
-                ? '香董正在準備這個主題的內容'
-                : '香董正在錄製第一批文章'}
-            </p>
-            <Link
-              href="/line"
-              className="inline-flex items-center gap-2 bg-lineGreen text-white px-5 py-2.5 rounded-md text-sm font-medium"
-            >
-              先加 LINE，新文章上架第一個通知你 →
-            </Link>
-          </div>
-        )}
-      </section>
-    
+          <div className="bg-cream border border-dashed border-gold/40 rounded-lg py-16 text-cent
