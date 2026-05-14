@@ -46,7 +46,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const article = await sanityClient
+  const article = await (sanityClient as any)
     .fetch(ARTICLE_BY_SLUG_QUERY, { slug })
     .catch(() => null)
 
@@ -95,8 +95,8 @@ export default async function ArticlePage({
   const { slug } = await params
 
   const [article, settings] = await Promise.all([
-    sanityClient.fetch(ARTICLE_BY_SLUG_QUERY, { slug }).catch(() => null),
-    sanityClient.fetch(SITE_SETTINGS_QUERY).catch(() => null),
+    (sanityClient as any).fetch(ARTICLE_BY_SLUG_QUERY, { slug }).catch(() => null),
+    (sanityClient as any).fetch(SITE_SETTINGS_QUERY).catch(() => null),
   ])
 
   if (!article) notFound()
@@ -104,7 +104,7 @@ export default async function ArticlePage({
   // 相關文章：手動指定優先，否則 fallback 同分類
   let related = article.manualRelatedArticles || []
   if (related.length === 0 && article.category?._id) {
-    related = await sanityClient
+    related = await (sanityClient as any)
       .fetch(FALLBACK_RELATED_ARTICLES_QUERY, {
         currentId: article._id,
         categoryId: article.category._id,
@@ -275,8 +275,4 @@ export default async function ArticlePage({
               <TableOfContents items={toc} />
             </div>
           </aside>
-        </div>
-      </div>
-    </article>
-  )
-}
+        </div
