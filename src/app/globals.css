@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-navy: #0B2545;
+  --color-gold: #C9A961;
+  --color-cream: #FAF7F2;
+  --color-wood: #3D2E1F;
+  --color-wood-light: #5C4E3D;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #FFFFFF;
+  color: var(--color-wood);
+  font-family: var(--font-sans, 'Noto Sans TC'), sans-serif;
+  line-height: 1.75;
+}
+
+/* Headings: Noto Serif TC 給標題增加質感 */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif, 'Noto Serif TC'), serif;
+  color: var(--color-navy);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-gold);
+  color: var(--color-navy);
+}
+
+/* Container */
+.container-x {
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+@media (min-width: 768px) {
+  .container-x { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* Prose styling for article body */
+.prose-xd {
+  color: var(--color-wood);
+  line-height: 1.85;
+  font-size: 1.0625rem;
+}
+.prose-xd h2 {
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid var(--color-gold);
+  padding-left: 0.75rem;
+}
+.prose-xd h3 {
+  font-size: 1.2rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-gold);
+}
+.prose-xd p { margin-bottom: 1.1rem; }
+.prose-xd a {
+  color: var(--color-navy);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-xd blockquote {
+  border-left: 3px solid var(--color-gold);
+  padding: 0.5rem 1rem;
+  background: var(--color-cream);
+  color: var(--color-navy);
+  margin: 1.5rem 0;
+  font-style: normal;
+}
+.prose-xd ul, .prose-xd ol { margin: 1rem 0 1rem 1.5rem; }
+.prose-xd ul li { list-style: disc; margin-bottom: 0.3rem; }
+.prose-xd ol li { list-style: decimal; margin-bottom: 0.3rem; }
+.prose-xd img { border-radius: 8px; margin: 1.5rem 0; }
+.prose-xd strong { color: var(--color-navy); font-weight: 600; }
