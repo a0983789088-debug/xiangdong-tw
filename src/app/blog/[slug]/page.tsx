@@ -275,4 +275,8 @@ export default async function ArticlePage({
               <TableOfContents items={toc} />
             </div>
           </aside>
-        </div
+        </div>
+      </div>
+    </article>
+  )
+}
