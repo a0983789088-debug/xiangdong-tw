@@ -95,4 +95,24 @@ export default async function RootLayout({
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInterac
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaId}', { anonymize_ip: true });
+              `}
+            </Script>
+          </>
+        )}
+
+        <Header />
+        <main className="min-h-[60vh]">{children}</main>
+        <Footer />
+        <FloatingCta settings={settings} />
+      </body>
+    </html>
+  )
+}
