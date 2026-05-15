@@ -10,5 +10,8 @@ export const sanityClient = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
+  // useCdn: false ── 每次直接撈 Sanity API（不走 CDN 邊緣快取）
+  // 換來：siteSettings 改動會立即生效（GSC 驗證、GA4 ID 等）
+  // 代價：每個請求多 100-300ms（content 站可接受）
+  useCdn: false,
 })
