@@ -16,33 +16,38 @@ export default defineConfig({
     structureTool({
       structure: (S) =>
         S.list()
+          .id('root')
           .title('內容管理')
           .items([
-            // 文章
             S.listItem()
+              .id('articles')
               .title('📄 文章')
               .child(
                 S.documentTypeList('article')
+                  .id('articleList')
                   .title('文章')
                   .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }])
               ),
-            // 商品
             S.listItem()
+              .id('products')
               .title('🛍️ 商品')
               .child(
-                S.documentTypeList('product').title('商品')
+                S.documentTypeList('product')
+                  .id('productList')
+                  .title('商品')
               ),
-            // 分類
             S.listItem()
+              .id('categories')
               .title('📂 分類')
               .child(
                 S.documentTypeList('category')
+                  .id('categoryList')
                   .title('分類')
                   .defaultOrdering([{ field: 'order', direction: 'asc' }])
               ),
             S.divider(),
-            // 全站設定（singleton）
             S.listItem()
+              .id('siteSettings')
               .title('⚙️ 網站設定')
               .child(
                 S.document()
