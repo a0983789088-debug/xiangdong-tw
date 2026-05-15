@@ -53,7 +53,7 @@ export default async function HomePage() {
                   href="/line"
                   className="inline-flex items-center justify-center gap-2 bg-lineGreen text-white px-5 py-3 rounded-md font-medium hover:opacity-90 transition"
                 >
-                  下載《沉香新手避雷指南》PDF ↓
+                  加 LINE 領《沉香新手避雷指南》
                 </Link>
                 <Link
                   href="/blog"
@@ -354,3 +354,4 @@ function EmptyState({ label, hint }: { label: string; hint: string }) {
     </div>
   )
 }
+ 
