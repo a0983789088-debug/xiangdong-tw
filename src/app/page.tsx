@@ -45,16 +45,15 @@ export default async function HomePage() {
                 從原料到成品都看得見。
               </h1>
               <p className="text-base text-woodLight leading-relaxed mb-7 max-w-xl">
-                香董做這行十幾年。我們不只賣成品，連製香原材料都直接販售
-                ── 因為一支香值不值得，不應該靠故事撐起來，應該靠
-                <strong className="text-navy">看得見的原料、算得出的成本、聞得出的香韻</strong>。
+                做這行十幾年。<strong className="text-navy">看得見的原料、算得出的成本、聞得出的香韻</strong>
+                ── 才是一支好香的真價值。
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mb-3">
                 <Link
                   href="/line"
                   className="inline-flex items-center justify-center gap-2 bg-lineGreen text-white px-5 py-3 rounded-md font-medium hover:opacity-90 transition"
                 >
-                  免費領《沉香新手避雷指南》PDF
+                  下載《沉香新手避雷指南》PDF ↓
                 </Link>
                 <Link
                   href="/blog"
@@ -124,8 +123,7 @@ export default async function HomePage() {
             香董想跟你聊的三件事
           </h2>
           <p className="text-sm text-woodLight max-w-xl mx-auto leading-relaxed">
-            這個網站不是商城，是香董把這十幾年買賣、開料、品香的經驗，
-            用文字記下來給你看的地方。
+            買賣、開料、品香的十幾年經驗，香董用文字一篇一篇記下來。
           </p>
         </div>
 
