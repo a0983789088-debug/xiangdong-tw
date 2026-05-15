@@ -14,7 +14,7 @@ export const siteSettings = defineType({
   type: 'document',
   groups: [
     { name: 'site', title: '基本設定', default: true },
-    { name: 'livestream', title: '本週直播' },
+    { name: 'livestream', title: '直播花絮' },
     { name: 'faq', title: '首頁 FAQ' },
     { name: 'cta', title: 'CTA 模組' },
     { name: 'tracking', title: '追蹤碼' },
@@ -46,25 +46,25 @@ export const siteSettings = defineType({
     // === Livestream 本週直播 ===
     defineField({
       name: 'livestreamTitle',
-      title: '本週直播主題',
+      title: '直播主題',
       type: 'string',
       group: 'livestream',
-      description: '例：「越南芽莊老料開料 + 沉香薄片競標」',
+      description: '最近一場直播的主題或亮點。例：「多產區沉香鑑賞局 + 印度老山 20mm 手珠開搶」',
     }),
     defineField({
       name: 'livestreamSchedule',
-      title: '本週直播時間',
+      title: '直播時間（固定時段）',
       type: 'string',
       group: 'livestream',
-      description: '例：「週五晚上 8:00」',
+      description: '訪客需要知道何時來追直播。例：「每週二、四晚上 7:00」',
     }),
     defineField({
       name: 'livestreamContent',
-      title: '本週開料 / 釋出內容',
+      title: '直播精華內容',
       type: 'text',
       group: 'livestream',
       rows: 3,
-      description: '簡述今天直播會看到什麼。1-2 句就好',
+      description: '介紹最近一場直播看到什麼。1-2 句就好',
     }),
 
     // === Homepage FAQ ===
