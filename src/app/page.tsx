@@ -76,8 +76,8 @@ export default async function HomePage() {
             <div className="md:col-span-5">
               <div className="bg-white border border-gold/30 rounded-lg p-6 md:p-7">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                  <p className="text-xs tracking-[3px] text-gold uppercase">本週直播</p>
+                  <span className="inline-block w-2 h-2 rounded-full bg-gold" />
+                  <p className="text-xs tracking-[3px] text-gold uppercase">直播花絮</p>
                 </div>
                 <p className="font-serif text-lg text-navy leading-snug mb-2">
                   {livestreamTitle || '每週固定 FB 直播'}
