@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { headers } from 'next/headers'
 import { Noto_Sans_TC, Noto_Serif_TC } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/Header'
@@ -23,23 +22,16 @@ const notoSerif = Noto_Serif_TC({
   display: 'swap',
 })
 
-const PRODUCTION_HOSTS = new Set([
-  'xiangdong.tw',
-  'www.xiangdong.tw',
-])
-
 const DEFAULT_TITLE = '香董｜真正的天然好香 · 沉香 · 線香 · 佛珠'
 const DEFAULT_DESCRIPTION =
   '香董，台灣沉香買賣商，做這行十幾年。沉香真假辨識、產地差別、保存方法、線香怎麼挑、佛珠選擇 ── 用實戰經驗一篇篇講清楚。不靠故事、不靠大師，靠看得見的原料。'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [settings, headersList] = await Promise.all([
-    sanityClient.fetch<any>(SITE_SETTINGS_QUERY).catch(() => null),
-    headers(),
-  ])
+  const settings = await sanityClient.fetch<any>(SITE_SETTINGS_QUERY).catch(() => null)
 
-  const host = headersList.get('host') || ''
-  const isProductionHost = PRODUCTION_HOSTS.has(host)
+  // VERCEL_ENV = 'production' | 'preview' | 'development'
+  // 只有正式網域才讓 Google 索引；preview / dev 一律 noindex
+  const isProductionHost = process.env.VERCEL_ENV === 'production'
 
   const title = settings?.siteTitle || DEFAULT_TITLE
   const description = settings?.siteDescription || DEFAULT_DESCRIPTION
@@ -50,7 +42,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: title, template: '%s ｜ 香董' },
     description,
     alternates: {
-      // Root canonical — child pages with their own alternates.canonical override this
       canonical: '/',
     },
     openGraph: {
@@ -66,9 +57,6 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
     },
-    // Only index when served from production domain.
-    // vercel.app preview deployments will be marked noindex to prevent
-    // duplicate-content competition with xiangdong.tw.
     robots: {
       index: isProductionHost,
       follow: isProductionHost,
