@@ -5,6 +5,7 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   siteTitle,
   siteDescription,
   defaultOgImage,
+  founderPhoto,
   livestreamTitle,
   livestreamSchedule,
   livestreamContent,

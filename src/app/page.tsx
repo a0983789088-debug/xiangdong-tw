@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { sanityClient } from '@/lib/sanity/client'
+import { urlForImage } from '@/lib/sanity/image'
 import {
   HOME_ARTICLES_QUERY,
   HOME_PRODUCTS_QUERY,
@@ -26,6 +28,8 @@ export default async function HomePage() {
   const livestreamTitle = settings?.livestreamTitle
   const livestreamSchedule = settings?.livestreamSchedule
   const livestreamContent = settings?.livestreamContent
+  const founderPhoto = settings?.founderPhoto
+  const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(800).url() : null
 
   return (
     <>
@@ -132,11 +136,7 @@ export default async function HomePage() {
             icon="❖"
             title="沉香知識"
             intro="什麼是沉香、怎麼分辨真假、各產地的差別。新手最常踩雷的地方都在這。"
-            items={[
-              { label: '新手如何挑沉香', href: '/blog?topic=agarwood-knowledge' },
-              { label: '沉香真假辨識 5 大重點', href: '/blog?topic=agarwood-knowledge' },
-              { label: '惠安與星洲沉香的差異', href: '/blog?topic=agarwood-knowledge' },
-            ]}
+            items={[]}
             mainLink="/blog?topic=agarwood-knowledge"
             mainLinkLabel="看沉香知識全部文章"
           />
@@ -144,11 +144,7 @@ export default async function HomePage() {
             icon="❀"
             title="線香使用"
             intro="從日常一支香開始，把香放進生活。新手線香怎麼挑、怎麼用、怎麼配空間。"
-            items={[
-              { label: '日常用香：每天點一支', href: '/blog?topic=incense-culture' },
-              { label: '靜心用香：泡茶、閱讀、冥想', href: '/blog?topic=incense-culture' },
-              { label: '新手線香推薦清單', href: '/blog?topic=beginner-guide' },
-            ]}
+            items={[]}
             mainLink="/blog?topic=incense-culture"
             mainLinkLabel="看線香相關文章"
           />
@@ -156,11 +152,7 @@ export default async function HomePage() {
             icon="◎"
             title="佛珠文化"
             intro="香木手珠不只是配件。從木質差異、配戴保養到收藏觀念，講清楚。"
-            items={[
-              { label: '不同木質的差異與選擇', href: '/blog?topic=incense-culture' },
-              { label: '佛珠配戴與日常保養', href: '/blog?topic=incense-culture' },
-              { label: '收藏級手珠的判斷', href: '/blog?topic=agarwood-knowledge' },
-            ]}
+            items={[]}
             mainLink="/blog?topic=incense-culture"
             mainLinkLabel="看佛珠相關文章"
           />
@@ -179,8 +171,18 @@ export default async function HomePage() {
                 我不是什麼大師<br />
                 也沒想改變世界
               </h2>
-              <div className="aspect-[4/5] bg-wood/10 rounded-lg border border-gold/20 flex items-center justify-center text-woodLight/50 text-sm">
-                （香董本人照片）
+              <div className="aspect-[4/5] bg-wood/10 rounded-lg border border-gold/20 overflow-hidden flex items-center justify-center text-woodLight/50 text-sm">
+                {founderPhotoUrl ? (
+                  <Image
+                    src={founderPhotoUrl}
+                    alt={founderPhoto?.alt || '香董本人'}
+                    width={800}
+                    height={1000}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span>（香董本人照片）</span>
+                )}
               </div>
             </div>
             <div className="md:col-span-8 md:pl-6">

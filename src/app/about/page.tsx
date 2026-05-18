@@ -1,8 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { CTA_PRESETS } from '@/lib/cta'
 import { JsonLd } from '@/components/JsonLd'
+import { sanityClient } from '@/lib/sanity/client'
+import { SITE_SETTINGS_QUERY } from '@/lib/sanity/queries'
+import { urlForImage } from '@/lib/sanity/image'
+
+export const revalidate = 300
 
 export const metadata: Metadata = {
   title: '關於香董｜從打工仔到沉香買賣商的十幾年',
@@ -13,7 +19,11 @@ export const metadata: Metadata = {
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://xiangdong.tw'
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await sanityClient.fetch<any>(SITE_SETTINGS_QUERY).catch(() => null)
+  const founderPhoto = settings?.founderPhoto
+  const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(1200).url() : null
+
   return (
     <>
       <JsonLd
@@ -45,8 +55,18 @@ export default function AboutPage() {
           也沒想改變世界
         </h1>
 
-        <div className="aspect-[4/3] bg-wood/10 rounded-lg border border-gold/20 flex items-center justify-center text-woodLight/50 text-sm mb-10">
-          （香董本人照片）
+        <div className="aspect-[4/3] bg-wood/10 rounded-lg border border-gold/20 overflow-hidden flex items-center justify-center text-woodLight/50 text-sm mb-10">
+          {founderPhotoUrl ? (
+            <Image
+              src={founderPhotoUrl}
+              alt={founderPhoto?.alt || '香董本人'}
+              width={1200}
+              height={900}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <span>（香董本人照片）</span>
+          )}
         </div>
 
         <div className="prose-xd">

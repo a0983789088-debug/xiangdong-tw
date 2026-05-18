@@ -42,6 +42,15 @@ export const siteSettings = defineType({
       type: 'image',
       group: 'site',
     }),
+    defineField({
+      name: 'founderPhoto',
+      title: '香董本人照片',
+      type: 'image',
+      group: 'site',
+      description: '會顯示在首頁「關於香董」段 + /about 頁',
+      options: { hotspot: true },
+      fields: [defineField({ name: 'alt', title: '圖片描述 (alt)', type: 'string' })],
+    }),
 
     // === Livestream 本週直播 ===
     defineField({
