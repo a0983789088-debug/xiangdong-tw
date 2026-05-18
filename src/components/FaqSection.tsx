@@ -10,7 +10,7 @@ export function FaqSection({
   if (!items || items.length === 0) return null
   return (
     <section className="mt-12 pt-10 border-t border-gold/30">
-      <h2 className="font-serif text-2xl text-navy mb-6">{title}</h2>
+      {title && <h2 className="font-serif text-2xl text-navy mb-6">{title}</h2>}
       <div className="space-y-4">
         {items.map((item, i) => (
           <details

@@ -7,6 +7,8 @@ import { Footer } from '@/components/Footer'
 import { FloatingCta } from '@/components/FloatingCta'
 import { sanityClient } from '@/lib/sanity/client'
 import { SITE_SETTINGS_QUERY } from '@/lib/sanity/queries'
+import { urlForImage } from '@/lib/sanity/image'
+import { JsonLd } from '@/components/JsonLd'
 
 const notoSans = Noto_Sans_TC({
   subsets: ['latin'],
@@ -37,6 +39,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = settings?.siteDescription || DEFAULT_DESCRIPTION
   const gscCode = settings?.searchConsoleVerification
 
+  // og:image: 優先用 defaultOgImage、沒有就用 founderPhoto
+  const ogSource = settings?.defaultOgImage || settings?.founderPhoto
+  const ogImageUrl = ogSource
+    ? urlForImage(ogSource)?.width(1200).height(630).fit('crop').url()
+    : null
+
   return {
     metadataBase: new URL('https://xiangdong.tw'),
     title: { default: title, template: '%s ｜ 香董' },
@@ -51,11 +59,13 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       url: 'https://xiangdong.tw',
+      images: ogImageUrl ? [{ url: ogImageUrl, width: 1200, height: 630 }] : undefined,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
     },
     robots: {
       index: isProductionHost,
@@ -79,6 +89,26 @@ export default async function RootLayout({
   return (
     <html lang="zh-TW" className={`${notoSans.variable} ${notoSerif.variable}`}>
       <body>
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: '香董',
+            alternateName: 'Xiangdong',
+            url: 'https://xiangdong.tw',
+            description:
+              '香董，台灣沉香買賣商，推動沉香標準化與價格透明化。不只賣成品，連製香原材料都直接販售。',
+            sameAs: [
+              'https://lin.ee/89W39yX',
+              'https://line.me/ti/g2/uuQhXp6AQHZxdg_uwDQqcUrCIP5c-i3fBzfh1A',
+              'https://www.facebook.com/groups/1789214647984397',
+              'https://www.facebook.com/groups/260642251054970',
+              'https://www.instagram.com/baujie_agarwood/',
+              'https://www.tiktok.com/@baojieagarwood',
+              'https://jambolive.tv/shop/62349/product/fb/',
+            ],
+          }}
+        />
         {gaId && (
           <>
             <Script

@@ -62,6 +62,7 @@ export default async function AboutPage() {
               alt={founderPhoto?.alt || '香董本人'}
               width={2000}
               height={2000}
+              priority
               className="w-full h-full object-cover"
             />
           ) : (
