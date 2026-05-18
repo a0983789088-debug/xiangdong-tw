@@ -22,7 +22,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://xiangdong.tw'
 export default async function AboutPage() {
   const settings = await sanityClient.fetch<any>(SITE_SETTINGS_QUERY).catch(() => null)
   const founderPhoto = settings?.founderPhoto
-  const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(1200).url() : null
+  const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(2000).url() : null
 
   return (
     <>
@@ -55,13 +55,13 @@ export default async function AboutPage() {
           也沒想改變世界
         </h1>
 
-        <div className="aspect-[4/3] bg-wood/10 rounded-lg border border-gold/20 overflow-hidden flex items-center justify-center text-woodLight/50 text-sm mb-10">
+        <div className="aspect-square bg-wood/10 rounded-lg border border-gold/20 overflow-hidden flex items-center justify-center text-woodLight/50 text-sm mb-10">
           {founderPhotoUrl ? (
             <Image
               src={founderPhotoUrl}
               alt={founderPhoto?.alt || '香董本人'}
-              width={1200}
-              height={900}
+              width={2000}
+              height={2000}
               className="w-full h-full object-cover"
             />
           ) : (
