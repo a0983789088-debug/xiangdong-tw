@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { CTA_PRESETS } from '@/lib/cta'
+import { buildPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: '加入 FB 競標社團｜每週直播好貨先看｜香董',
-  description:
-    '香董每週固定 FB 直播競標：開料、品香、收藏級單一件。加入社團，獨家好貨優先看，現場試香、即時答疑。',
-  alternates: { canonical: '/community' },
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata({
+    title: '加入 FB 競標社團｜每週直播好貨先看｜香董',
+    description:
+      '香董每週固定 FB 直播競標：開料、品香、收藏級單一件。加入社團，獨家好貨優先看，現場試香、即時答疑。',
+    path: '/community',
+  })
 }
 
 export default function CommunityPage() {

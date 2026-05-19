@@ -4,14 +4,17 @@ import { sanityClient } from '@/lib/sanity/client'
 import { ALL_PRODUCTS_QUERY } from '@/lib/sanity/queries'
 import { ProductCard, type ProductCardData } from '@/components/ProductCard'
 import { Breadcrumb } from '@/components/Breadcrumb'
+import { buildPageMetadata } from '@/lib/seo'
 
 export const revalidate = 300
 
-export const metadata: Metadata = {
-  title: '商品櫥窗｜沉香 · 線香 · 佛珠 · 原料',
-  description:
-    '香董精選商品櫥窗：沉香、線香、佛珠、製香原料。每一件附產地、香韻、適合誰的說明。點商品跳轉就醬播商城選購、直播洽詢。',
-  alternates: { canonical: '/shop' },
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata({
+    title: '商品櫥窗｜沉香 · 線香 · 佛珠 · 原料',
+    description:
+      '香董精選商品櫥窗：沉香、線香、佛珠、製香原料。每一件附產地、香韻、適合誰的說明。點商品跳轉就醬播商城選購、直播洽詢。',
+    path: '/shop',
+  })
 }
 
 export default async function ShopPage() {

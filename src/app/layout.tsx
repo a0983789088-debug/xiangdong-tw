@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Noto_Sans_TC, Noto_Serif_TC } from 'next/font/google'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -130,6 +131,7 @@ export default async function RootLayout({
         <main className="min-h-[60vh]">{children}</main>
         <Footer />
         <FloatingCta settings={settings} />
+        <SpeedInsights />
       </body>
     </html>
   )

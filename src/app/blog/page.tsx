@@ -3,13 +3,16 @@ import { groq } from 'next-sanity'
 
 import { sanityClient } from '@/lib/sanity/client'
 import { ArticleCard, type ArticleCardData } from '@/components/ArticleCard'
+import { buildPageMetadata } from '@/lib/seo'
 
 export const revalidate = 300
 
-export const metadata: Metadata = {
-  title: '香董文章',
-  description: '香董把這十幾年買賣沉香、開料、品香的經驗用文字記下來。',
-  alternates: { canonical: '/blog' },
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata({
+    title: '香董文章',
+    description: '香董把這十幾年買賣沉香、開料、品香的經驗用文字記下來。',
+    path: '/blog',
+  })
 }
 
 type Category = {

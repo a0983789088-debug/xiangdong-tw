@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { CTA_PRESETS } from '@/lib/cta'
+import { buildPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: '加 LINE 領《沉香新手避雷指南》｜香董',
-  description:
-    '加香董 LINE 官方帳號，免費領《沉香新手避雷指南》PDF + 收藏級沉香優先通知 + 直播開播提醒 + 新品試聞資訊。',
-  alternates: { canonical: '/line' },
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata({
+    title: '加 LINE 領《沉香新手避雷指南》｜香董',
+    description:
+      '加香董 LINE 官方帳號，免費領《沉香新手避雷指南》PDF + 收藏級沉香優先通知 + 直播開播提醒 + 新品試聞資訊。',
+    path: '/line',
+  })
 }
 
 const BENEFITS = [
