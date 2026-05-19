@@ -22,7 +22,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://xiangdong.tw'
 export default async function AboutPage() {
   const settings = await sanityClient.fetch<any>(SITE_SETTINGS_QUERY).catch(() => null)
   const founderPhoto = settings?.founderPhoto
-  const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(2000).url() : null
+  const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(800).height(800).fit('crop').url() : null
 
   return (
     <>
@@ -60,9 +60,12 @@ export default async function AboutPage() {
             <Image
               src={founderPhotoUrl}
               alt={founderPhoto?.alt || '香董本人'}
-              width={2000}
-              height={2000}
+              width={800}
+              height={800}
               priority
+              fetchPriority="high"
+              loading="eager"
+              sizes="(max-width: 768px) 90vw, 672px"
               className="w-full h-full object-cover"
             />
           ) : (

@@ -29,7 +29,7 @@ export default async function HomePage() {
   const livestreamSchedule = settings?.livestreamSchedule
   const livestreamContent = settings?.livestreamContent
   const founderPhoto = settings?.founderPhoto
-  const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(1600).url() : null
+  const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(600).height(750).fit('crop').url() : null
 
   return (
     <>
@@ -176,8 +176,12 @@ export default async function HomePage() {
                   <Image
                     src={founderPhotoUrl}
                     alt={founderPhoto?.alt || '香董本人'}
-                    width={1600}
-                    height={2000}
+                    width={600}
+                    height={750}
+                    priority
+                    fetchPriority="high"
+                    loading="eager"
+                    sizes="(max-width: 768px) 50vw, 400px"
                     className="w-full h-full object-cover"
                   />
                 ) : (
