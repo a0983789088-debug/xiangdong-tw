@@ -16,7 +16,7 @@ export function ArticleCta({
   return (
     <section className="mt-12 pt-10 border-t border-gold/30">
       <div className="text-center mb-6">
-        <p className="text-xs tracking-[3px] text-gold uppercase mb-2">Next</p>
+        <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">Next</p>
         <p className="font-serif text-xl text-navy">下一步：跟香董聊聊</p>
       </div>
 

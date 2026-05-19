@@ -41,7 +41,7 @@ export default async function HomePage() {
         <div className="container-x py-14 md:py-20">
           <div className="grid md:grid-cols-12 gap-10 items-center">
             <div className="md:col-span-7">
-              <p className="text-xs tracking-[3px] text-gold uppercase mb-4">
+              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-4">
                 沉香 · 線香 · 佛珠 · 原料
               </p>
               <h1 className="font-serif text-3xl md:text-5xl text-navy leading-tight tracking-wide mb-5">
@@ -81,7 +81,7 @@ export default async function HomePage() {
               <div className="bg-white border border-gold/30 rounded-lg p-6 md:p-7">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="inline-block w-2 h-2 rounded-full bg-gold" />
-                  <p className="text-xs tracking-[3px] text-gold uppercase">直播花絮</p>
+                  <p className="text-xs tracking-[3px] text-goldDark uppercase">直播花絮</p>
                 </div>
                 <p className="font-serif text-lg text-navy leading-snug mb-2">
                   {livestreamTitle || '每週固定 FB 直播'}
@@ -120,7 +120,7 @@ export default async function HomePage() {
       {/* ===== 知識主題入口 ===== */}
       <section className="container-x py-16 md:py-20">
         <div className="text-center mb-10 md:mb-12">
-          <p className="text-xs tracking-[3px] text-gold uppercase mb-3">
+          <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
             Knowledge Hub · 從這裡開始
           </p>
           <h2 className="font-serif text-2xl md:text-3xl text-navy mb-3">
@@ -164,7 +164,7 @@ export default async function HomePage() {
         <div className="container-x">
           <div className="grid md:grid-cols-12 gap-10">
             <div className="md:col-span-4">
-              <p className="text-xs tracking-[3px] text-gold uppercase mb-3">
+              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
                 關於香董
               </p>
               <h2 className="font-serif text-2xl md:text-3xl text-navy mb-5 leading-snug">
@@ -231,7 +231,7 @@ export default async function HomePage() {
         <div className="container-x">
           <div className="flex items-end justify-between mb-8">
             <div>
-              <p className="text-xs tracking-[3px] text-gold uppercase mb-2">
+              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
                 Latest Articles
               </p>
               <h2 className="font-serif text-2xl md:text-3xl text-navy">最新文章</h2>
@@ -269,7 +269,7 @@ export default async function HomePage() {
       <section className="container-x py-16 md:py-20">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs tracking-[3px] text-gold uppercase mb-2">
+            <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
               Featured Products
             </p>
             <h2 className="font-serif text-2xl md:text-3xl text-navy">本週精選</h2>
@@ -304,7 +304,7 @@ export default async function HomePage() {
         <section className="bg-cream py-16 md:py-20 border-y border-gold/15">
           <div className="container-x">
             <div className="text-center mb-8">
-              <p className="text-xs tracking-[3px] text-gold uppercase mb-2">
+              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
                 FAQ
               </p>
               <h2 className="font-serif text-2xl md:text-3xl text-navy">
@@ -329,7 +329,7 @@ export default async function HomePage() {
       {/* ===== 延伸學習 ===== */}
       <section className="container-x pb-20">
         <div className="border-t border-dashed border-gold/40 pt-8 text-center">
-          <p className="text-xs tracking-[3px] text-gold uppercase mb-2">
+          <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
             Extended Learning
           </p>
           <p className="text-navy">

@@ -47,7 +47,7 @@ export default async function AboutPage() {
       </div>
 
       <article className="container-x pt-4 pb-16 max-w-2xl">
-        <p className="text-xs tracking-[3px] text-gold uppercase mb-3">
+        <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
           關於香董
         </p>
         <h1 className="font-serif text-3xl md:text-4xl text-navy leading-tight mb-6">

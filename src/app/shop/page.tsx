@@ -26,7 +26,7 @@ export default async function ShopPage() {
       </div>
 
       <header className="container-x pt-4 pb-6">
-        <p className="text-xs tracking-[3px] text-gold uppercase mb-2">
+        <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
           Shop · 商品櫥窗
         </p>
         <h1 className="font-serif text-3xl md:text-4xl text-navy mb-4">

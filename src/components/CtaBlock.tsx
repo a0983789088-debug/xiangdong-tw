@@ -26,7 +26,7 @@ export function CtaBlock({
       <div className="text-center mb-7">
         <div className="inline-flex items-center gap-3 mb-3">
           <span className="block w-10 h-px bg-gold" />
-          <span className="text-xs tracking-[3px] text-gold uppercase">Next</span>
+          <span className="text-xs tracking-[3px] text-goldDark uppercase">Next</span>
           <span className="block w-10 h-px bg-gold" />
         </div>
         <h2 className="text-2xl text-navy">{heading}</h2>

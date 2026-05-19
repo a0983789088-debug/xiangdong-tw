@@ -68,7 +68,7 @@ export function ArticleCard({ article }: { article: ArticleCardData }) {
             {article.excerpt}
           </p>
         )}
-        <p className="text-xs text-gold inline-flex items-center gap-1 mt-4">
+        <p className="text-xs text-goldDark inline-flex items-center gap-1 mt-4">
           <span>讀全文</span>
           <span>→</span>
         </p>

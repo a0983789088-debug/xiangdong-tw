@@ -4,7 +4,7 @@ export function RelatedProducts({ products }: { products: ProductCardData[] }) {
   if (!products || products.length === 0) return null
   return (
     <section className="mt-12 pt-10 border-t border-gold/30">
-      <p className="text-xs tracking-[3px] text-gold uppercase mb-2">
+      <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
         Related Products
       </p>
       <h2 className="font-serif text-2xl text-navy mb-6">文章提到的商品</h2>

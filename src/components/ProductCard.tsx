@@ -106,7 +106,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             {product.shortDescription}
           </p>
         )}
-        <p className="text-xs text-gold inline-flex items-center gap-1">
+        <p className="text-xs text-goldDark inline-flex items-center gap-1">
           <span>{product.isCollectible ? '到就醬播洽詢' : '到就醬播選購'}</span>
           <span>→</span>
         </p>

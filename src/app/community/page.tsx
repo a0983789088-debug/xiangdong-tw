@@ -17,7 +17,7 @@ export default function CommunityPage() {
       </div>
 
       <section className="container-x pt-4 pb-16 max-w-3xl">
-        <p className="text-xs tracking-[3px] text-gold uppercase mb-3">
+        <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
           FB 直播競標社團
         </p>
         <h1 className="font-serif text-3xl md:text-4xl text-navy leading-tight mb-5">
@@ -42,7 +42,7 @@ export default function CommunityPage() {
 
         <div className="grid sm:grid-cols-2 gap-6 mb-12">
           <div className="bg-cream rounded-lg p-6 border border-gold/20">
-            <p className="text-xs tracking-[3px] text-gold uppercase mb-2">
+            <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
               直播內容
             </p>
             <h3 className="text-navy text-lg mb-3">每週直播</h3>
@@ -54,7 +54,7 @@ export default function CommunityPage() {
             </ul>
           </div>
           <div className="bg-cream rounded-lg p-6 border border-gold/20">
-            <p className="text-xs tracking-[3px] text-gold uppercase mb-2">
+            <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
               社團規則
             </p>
             <h3 className="text-navy text-lg mb-3">入社團須知</h3>

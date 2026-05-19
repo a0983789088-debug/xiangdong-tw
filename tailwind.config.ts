@@ -11,13 +11,13 @@ const config: Config = {
         // 香董品牌色
         navy: '#0B2545',
         navyDark: '#081B33',
-        gold: '#C9A961',
-        goldDark: '#A88A45',
+        gold: '#A37D2E',
+        goldDark: '#7A5F1F',
         cream: '#FAF7F2',
         wood: '#3D2E1F',
         woodLight: '#5C4E3D',
         // 通道色（不可改、需符合品牌官方色）
-        lineGreen: '#06C755',
+        lineGreen: '#04A04A',
         fbBlue: '#1877F2',
       },
       fontFamily: {

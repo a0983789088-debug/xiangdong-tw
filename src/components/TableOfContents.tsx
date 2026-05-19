@@ -29,7 +29,7 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
 
   return (
     <nav aria-label="目錄" className="bg-cream border border-gold/30 rounded-lg p-5 sticky top-24">
-      <p className="text-xs tracking-[3px] text-gold uppercase mb-3">目錄</p>
+      <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">目錄</p>
       <ul className="space-y-1.5 text-sm">
         {items.map((it) => (
           <li key={it.id} className={it.level === 3 ? 'ml-4' : ''}>

@@ -96,7 +96,7 @@ export function resolveCtasForArticle(
 export function getCtaColor(type: string): { bg: string; fg: string } {
   switch (type) {
     case 'line':
-      return { bg: '#06C755', fg: '#FFFFFF' }
+      return { bg: '#04A04A', fg: '#FFFFFF' }
     case 'community':
       return { bg: '#0B2545', fg: '#FFFFFF' }
     case 'fbBidding':

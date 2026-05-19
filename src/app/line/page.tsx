@@ -40,7 +40,7 @@ export default function LineLandingPage() {
       </div>
 
       <section className="container-x pt-4 pb-16 max-w-3xl">
-        <p className="text-xs tracking-[3px] text-gold uppercase mb-3">
+        <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
           香董 LINE 官方帳號
         </p>
         <h1 className="font-serif text-3xl md:text-4xl text-navy leading-tight mb-5">

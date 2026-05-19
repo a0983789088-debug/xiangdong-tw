@@ -184,7 +184,7 @@ export default async function ArticlePage({
         {article.category && (
           <Link
             href={`/blog?topic=${article.category.slug}`}
-            className="inline-block text-xs tracking-[3px] text-gold uppercase mb-3 hover:text-goldDark"
+            className="inline-block text-xs tracking-[3px] text-goldDark uppercase mb-3 hover:text-goldDark"
           >
             {article.category.name}
           </Link>
