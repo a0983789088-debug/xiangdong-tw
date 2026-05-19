@@ -7,14 +7,17 @@ import { JsonLd } from '@/components/JsonLd'
 import { sanityClient } from '@/lib/sanity/client'
 import { SITE_SETTINGS_QUERY } from '@/lib/sanity/queries'
 import { urlForImage } from '@/lib/sanity/image'
+import { buildPageMetadata } from '@/lib/seo'
 
 export const revalidate = 300
 
-export const metadata: Metadata = {
-  title: '關於香董｜從打工仔到沉香買賣商的十幾年',
-  description:
-    '香董創業故事：18 歲入伍、退伍夜間部、中國信託、保誠人壽、2008 創業。我不是大師，也沒想改變世界，只想做一件自己相信的事。',
-  alternates: { canonical: '/about' },
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata({
+    title: '關於香董｜從打工仔到沉香買賣商的十幾年',
+    description:
+      '香董創業故事：18 歲入伍、退伍夜間部、中國信託、保誠人壽、2008 創業。我不是大師，也沒想改變世界，只想做一件自己相信的事。',
+    path: '/about',
+  })
 }
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://xiangdong.tw'
