@@ -12,14 +12,14 @@ import { JsonLd } from '@/components/JsonLd'
 
 const notoSans = Noto_Sans_TC({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['400', '500', '700'],
   variable: '--font-sans',
   display: 'swap',
 })
 
 const notoSerif = Noto_Serif_TC({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500'],
   variable: '--font-serif',
   display: 'swap',
 })
