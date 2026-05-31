@@ -25,11 +25,79 @@ import {
   buildArticleJsonLd,
   buildFaqJsonLd,
   buildBreadcrumbJsonLd,
+  buildHowToJsonLd,
 } from '@/components/JsonLd'
 
 export const revalidate = 300
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://xiangdong.tw'
+
+/**
+ * HowTo 結構化資料 ── 給 Google / AI 看的「步驟教學」標記
+ * 只有明確有步驟的教學文才會啟用、其他文章維持原狀。
+ */
+const HOWTO_BY_SLUG: Record<
+  string,
+  {
+    name: string
+    description: string
+    totalTime?: string
+    steps: Array<{ name: string; text: string }>
+  }
+> = {
+  'how-to-light-and-extinguish-incense': {
+    name: '怎麼正確點香與滅香（晃香法）',
+    description:
+      '用打火機內焰點燃香頭、再用「先往後、再往前」的晃香法滅火、可以保留完整的頭香層次、避免高溫碳化或嘴吹造成的雜味。',
+    totalTime: 'PT2M',
+    steps: [
+      {
+        name: '用打火機內焰點燃香頭',
+        text: '把打火機火焰調小一點、用靠近本體的藍色內焰部分接觸香頭、避免外焰高溫快速碳化表面、燒糊頭香層次。',
+      },
+      {
+        name: '手持香身、線香拿穩',
+        text: '香品點燃後不要急著放下、手持香身末端、讓線香維持垂直、不要傾斜、避免香灰整段掉落。',
+      },
+      {
+        name: '稍微往後帶一下',
+        text: '把香頭朝身體略後方輕輕一帶、動作要慢、不要太用力、這一帶是為了在下一個動作前讓火苗集中。',
+      },
+      {
+        name: '快速往前斜向一晃',
+        text: '接著快速往斜前方一晃、利用空氣自然流動把火苗順手帶熄。動作乾淨俐落、不需要重複甩動。',
+      },
+    ],
+  },
+  'agarwood-real-vs-fake': {
+    name: '怎麼分辨沉香真假 ── 香董的 5 招避雷心法',
+    description:
+      '不靠拿打火機燒、用「一摸、二聞、三帶、四感、問來源」5 個步驟、從油脂、香氣、重量、觸感與產地來源全面判斷沉香真假。',
+    totalTime: 'PT5M',
+    steps: [
+      {
+        name: '一摸 ── 摸油脂感',
+        text: '手指摸過沉香表面、感受油脂分布是否自然。真沉香油脂結在木質紋理裡、摸起來有溫潤的油感；假沉香或泡油料表面通常油得不自然、甚至會沾手。',
+      },
+      {
+        name: '二聞 ── 聞香韻層次',
+        text: '常溫狀態下輕聞、再用體溫或手心搓熱聞。真沉香的香氣有前中後段層次（甜、涼、木質尾韻）；化學催香或人工料聞起來香氣單薄、且久聞會頭暈或刺鼻。',
+      },
+      {
+        name: '三帶 ── 看重量是否合理',
+        text: '同樣大小的沉香、油脂含量越高、重量越沉。手上掂掂看、如果體積大但輕得不合理、可能是油脂不足或被掏空的次料；過重又均勻可能是泡油增重。',
+      },
+      {
+        name: '四感 ── 摸質感與紋理',
+        text: '看表面紋理走向是否自然、有沒有刀痕或人工拼接痕跡。真沉香的紋路會跟著樹的生長方向走、油脂分布有深淺；人工料紋理通常太工整或太雜亂。',
+      },
+      {
+        name: '問來源 ── 確認產地與管道',
+        text: '直接問賣家「這支料從哪裡來？」可信賣家會明確回答產區（越南、印尼、芽莊⋯⋯）；只說「上等老料」或「大師收藏」這類含糊用詞的、要小心。',
+      },
+    ],
+  },
+}
 
 /** SSG: 預先生成所有文章靜態頁 */
 export async function generateStaticParams() {
@@ -170,6 +238,14 @@ export default async function ArticlePage({
             .concat([{ label: article.title, url }])
         )}
       />
+      {HOWTO_BY_SLUG[slug] && (
+        <JsonLd
+          data={buildHowToJsonLd({
+            ...HOWTO_BY_SLUG[slug],
+            imageUrl: ogImageUrl,
+          })}
+        />
+      )}
       {article.faq?.length > 0 && (
         <JsonLd data={buildFaqJsonLd(article.faq)} />
       )}
