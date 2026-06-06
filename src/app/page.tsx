@@ -30,6 +30,10 @@ export default async function HomePage() {
   const livestreamContent = settings?.livestreamContent
   const founderPhoto = settings?.founderPhoto
   const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(600).height(750).fit('crop').url() : null
+  const heroImageSource = products.find((product) => product.mainImage)?.mainImage || founderPhoto
+  const heroImageUrl = heroImageSource
+    ? urlForImage(heroImageSource)?.width(1800).height(1050).fit('crop').url()
+    : null
 
   return (
     <>
@@ -37,20 +41,35 @@ export default async function HomePage() {
       {faq.length > 0 && <JsonLd data={buildFaqJsonLd(faq)} />}
 
       {/* ===== Hero ===== */}
-      <section className="bg-cream border-b border-gold/15">
-        <div className="container-x py-14 md:py-20">
-          <div className="grid md:grid-cols-12 gap-10 items-center">
+      <section className="relative overflow-hidden bg-navy text-cream">
+        {heroImageUrl && (
+          <Image
+            src={heroImageUrl}
+            alt="香董精選沉香與線香實拍"
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            className="object-cover opacity-[0.42]"
+          />
+        )}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,27,51,0.94)_0%,rgba(8,27,51,0.78)_48%,rgba(8,27,51,0.42)_100%)]" />
+        <div className="container-x relative py-14 md:py-20">
+          <div className="grid md:grid-cols-12 gap-10 items-end">
             <div className="md:col-span-7">
-              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-4">
+              <p className="text-xs tracking-[3px] text-gold uppercase mb-4">
                 沉香 · 線香 · 佛珠 · 原料
               </p>
-              <h1 className="font-serif text-3xl md:text-5xl text-navy leading-tight tracking-wide mb-5">
+              <h1 className="font-serif text-3xl md:text-5xl text-cream leading-tight tracking-wide mb-5">
                 真正的天然好香，<br />
                 從原料到成品都看得見。
               </h1>
-              <p className="text-base text-woodLight leading-relaxed mb-7 max-w-xl">
-                做這行十幾年。<strong className="text-navy">看得見的原料、算得出的成本、聞得出的香韻</strong>
-                ── 才是一支好香的真價值。
+              <p className="max-w-lg text-base md:text-lg text-cream/86 leading-relaxed mb-7">
+                <span className="block sm:inline">做這行十幾年。</span>
+                <strong className="block text-cream sm:inline">
+                  看得見原料、算得出成本、聞得出香韻。
+                </strong>
+                <span className="block sm:inline">才是一支好香的真價值。</span>
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mb-3">
                 <Link
@@ -60,55 +79,50 @@ export default async function HomePage() {
                   加 LINE 領《沉香新手避雷指南》
                 </Link>
                 <Link
-                  href="/blog"
-                  className="inline-flex items-center justify-center gap-2 border border-navy text-navy px-5 py-3 rounded-md font-medium hover:bg-navy hover:text-white transition"
+                  href="/blog/how-to-pick-agarwood-beginner-guide"
+                  className="inline-flex items-center justify-center gap-2 border border-cream/55 text-cream px-5 py-3 rounded-md font-medium hover:bg-cream hover:text-navy transition"
                 >
-                  開始讀沉香知識 →
+                  先看新手怎麼挑 →
                 </Link>
               </div>
-              <p className="text-xs text-woodLight/85 leading-relaxed">
-                加 LINE 還可以收到：
-                <span className="text-navy">收藏級沉香優先通知</span>
-                <span className="mx-1.5 text-gold/50">·</span>
-                <span className="text-navy">直播開播提醒</span>
-                <span className="mx-1.5 text-gold/50">·</span>
-                <span className="text-navy">新品試聞資訊</span>
+              <p className="text-xs text-cream/74 leading-relaxed">
+                先領避雷指南，再收到收藏級沉香優先通知、直播提醒、新品試聞資訊。
               </p>
             </div>
 
             {/* Hero side: 本週直播（從 siteSettings 動態取） */}
-            <div className="md:col-span-5">
-              <div className="bg-white border border-gold/30 rounded-lg p-6 md:p-7">
+            <div className="md:col-span-5 md:border-l md:border-cream/24 md:pl-8">
+              <div className="max-w-md md:ml-auto">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="inline-block w-2 h-2 rounded-full bg-gold" />
-                  <p className="text-xs tracking-[3px] text-goldDark uppercase">直播花絮</p>
+                  <p className="text-xs tracking-[3px] text-gold uppercase">直播花絮</p>
                 </div>
-                <p className="font-serif text-lg text-navy leading-snug mb-2">
+                <p className="font-serif text-lg md:text-xl text-cream leading-snug mb-2 [overflow-wrap:anywhere]">
                   {livestreamTitle || '每週固定 FB 直播'}
                 </p>
                 {livestreamSchedule && (
                   <p className="text-sm text-gold mb-3">{livestreamSchedule}</p>
                 )}
-                <p className="text-sm text-woodLight leading-relaxed mb-5">
+                <p className="text-sm text-cream/78 leading-relaxed mb-5 line-clamp-5 md:line-clamp-none [overflow-wrap:anywhere]">
                   {livestreamContent ||
                     '開料、品香、社團競標。香董親自切原料、現場試香、即時答疑。收藏級單一件多在直播中釋出。'}
                 </p>
-                <div className="space-y-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
                   <a
                     href="https://www.facebook.com/groups/1789214647984397"
                     target="_blank"
                     rel="noopener"
-                    className="block text-sm text-navy underline decoration-gold underline-offset-4 hover:text-goldDark"
+                    className="text-cream underline decoration-gold underline-offset-4 hover:text-gold"
                   >
-                    → 加入 FB 競標社團
+                    加入 FB 競標社團
                   </a>
                   <a
                     href="https://jambolive.tv/shop/62349/product/fb/"
                     target="_blank"
                     rel="noopener"
-                    className="block text-sm text-navy underline decoration-gold underline-offset-4 hover:text-goldDark"
+                    className="text-cream underline decoration-gold underline-offset-4 hover:text-gold"
                   >
-                    → 看就醬播商城
+                    看就醬播商城
                   </a>
                 </div>
               </div>
@@ -117,16 +131,63 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ===== 新手停留導覽 ===== */}
+      <section className="bg-white border-b border-gold/15">
+        <div className="container-x py-9 md:py-11">
+          <div className="grid gap-5 md:grid-cols-12 md:items-center">
+            <div className="md:col-span-4">
+              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
+                第一次來香董
+              </p>
+              <h2 className="font-serif text-2xl text-navy leading-snug">
+                先把三個最容易踩雷的問題搞懂
+              </h2>
+            </div>
+            <div className="md:col-span-8 grid gap-3 sm:grid-cols-3">
+              {[
+                {
+                  label: '沉香會沉水就比較貴嗎？',
+                  href: '/blog/agarwood-sinking-water-value',
+                },
+                {
+                  label: '線香黏粉越低越好嗎？',
+                  href: '/blog/agarwood-incense-binder-ratio-explained',
+                },
+                {
+                  label: '越南、印尼、檀香差在哪？',
+                  href: '/blog/vietnam-indonesia-sandalwood-comparison',
+                },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="group flex min-h-24 flex-col justify-between rounded-lg border border-gold/20 bg-cream px-4 py-4 transition-colors hover:border-gold/60 hover:bg-white"
+                >
+                  <span className="text-sm font-medium leading-snug text-navy">
+                    {item.label}
+                  </span>
+                  <span className="mt-3 text-xs text-goldDark group-hover:text-navy">
+                    讀香董實戰說法 →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== 知識主題入口 ===== */}
       <section className="container-x py-16 md:py-20">
-        <div className="text-center mb-10 md:mb-12">
-          <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
-            Knowledge Hub · 從這裡開始
-          </p>
-          <h2 className="font-serif text-2xl md:text-3xl text-navy mb-3">
-            香董想跟你聊的三件事
-          </h2>
-          <p className="text-sm text-woodLight max-w-xl mx-auto leading-relaxed">
+        <div className="mb-10 md:mb-12 md:flex md:items-end md:justify-between md:gap-8">
+          <div>
+            <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
+              Knowledge Hub · 從這裡開始
+            </p>
+            <h2 className="font-serif text-2xl md:text-3xl text-navy mb-3">
+              香董想跟你聊的三件事
+            </h2>
+          </div>
+          <p className="text-sm text-woodLight max-w-xl leading-relaxed">
             買賣、開料、品香的十幾年經驗，香董用文字一篇一篇記下來。
           </p>
         </div>
@@ -136,7 +197,11 @@ export default async function HomePage() {
             icon="❖"
             title="沉香知識"
             intro="什麼是沉香、怎麼分辨真假、各產地的差別。新手最常踩雷的地方都在這。"
-            items={[]}
+            items={[
+              { label: '真假沉香怎麼辨識？', href: '/blog/agarwood-real-vs-fake' },
+              { label: '沉水能不能判斷價格？', href: '/blog/agarwood-sinking-water-value' },
+              { label: '新手第一塊沉香怎麼挑？', href: '/blog/how-to-pick-agarwood-beginner-guide' },
+            ]}
             mainLink="/blog?topic=agarwood-knowledge"
             mainLinkLabel="看沉香知識全部文章"
           />
@@ -144,7 +209,11 @@ export default async function HomePage() {
             icon="❀"
             title="線香使用"
             intro="從日常一支香開始，把香放進生活。新手線香怎麼挑、怎麼用、怎麼配空間。"
-            items={[]}
+            items={[
+              { label: '黏粉比例越低越好嗎？', href: '/blog/agarwood-incense-binder-ratio-explained' },
+              { label: '點香後為什麼別用嘴吹？', href: '/blog/how-to-light-and-extinguish-incense' },
+              { label: '越南、印尼、檀香怎麼選？', href: '/blog/vietnam-indonesia-sandalwood-comparison' },
+            ]}
             mainLink="/blog?topic=incense-culture"
             mainLinkLabel="看線香相關文章"
           />
@@ -152,7 +221,11 @@ export default async function HomePage() {
             icon="◎"
             title="佛珠文化"
             intro="香木手珠不只是配件。從木質差異、配戴保養到收藏觀念，講清楚。"
-            items={[]}
+            items={[
+              { label: '先看木質、油線還是香氣？', href: '/blog/how-to-pick-agarwood-beginner-guide' },
+              { label: '為什麼價格會差很多？', href: '/blog/agarwood-real-vs-fake' },
+              { label: '買之前先問哪三件事？', href: '/line' },
+            ]}
             mainLink="/blog?topic=incense-culture"
             mainLinkLabel="看佛珠相關文章"
           />
@@ -274,7 +347,7 @@ export default async function HomePage() {
             </p>
             <h2 className="font-serif text-2xl md:text-3xl text-navy">本週精選</h2>
             <p className="text-sm text-woodLight mt-2">
-              點商品 → 跳轉就醬播商城
+              先看適合誰與香韻，再到就醬播商城下單或洽詢。
             </p>
           </div>
           <Link
