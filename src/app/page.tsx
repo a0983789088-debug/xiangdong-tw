@@ -25,9 +25,6 @@ export default async function HomePage() {
   ])
 
   const faq = settings?.homepageFaq || []
-  const livestreamTitle = settings?.livestreamTitle
-  const livestreamSchedule = settings?.livestreamSchedule
-  const livestreamContent = settings?.livestreamContent
   const founderPhoto = settings?.founderPhoto
   const founderPhotoUrl = founderPhoto ? urlForImage(founderPhoto)?.width(600).height(750).fit('crop').url() : null
   const heroImageSource = products.find((product) => product.mainImage)?.mainImage || founderPhoto
@@ -96,22 +93,23 @@ export default async function HomePage() {
               </p>
             </div>
 
-            {/* Hero side: 本週直播（從 siteSettings 動態取） */}
+            {/* Hero side: 好料流動入口 */}
             <div className="md:col-span-5 md:border-l md:border-cream/24 md:pl-8">
               <div className="max-w-md md:ml-auto">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="inline-block w-2 h-2 rounded-full bg-gold" />
-                  <p className="text-xs tracking-[3px] text-gold uppercase">直播花絮</p>
+                  <p className="text-xs tracking-[3px] text-gold uppercase">
+                    好料流動入口
+                  </p>
                 </div>
                 <p className="font-serif text-lg md:text-xl text-cream leading-snug mb-2 [overflow-wrap:anywhere]">
-                  {livestreamTitle || '每週固定 FB 直播'}
+                  很多好料，不會安靜地躺在商品頁。
                 </p>
-                {livestreamSchedule && (
-                  <p className="text-sm text-gold mb-3">{livestreamSchedule}</p>
-                )}
-                <p className="text-sm text-cream/78 leading-relaxed mb-5 line-clamp-5 md:line-clamp-none [overflow-wrap:anywhere]">
-                  {livestreamContent ||
-                    '開料、品香、社團競標。香董親自切原料、現場試香、即時答疑。收藏級單一件多在直播中釋出。'}
+                <p className="text-sm text-cream/78 leading-relaxed mb-4 [overflow-wrap:anywhere]">
+                  少量沉香、收藏級原料、特殊線香，常常是在直播、社團、熟客詢問裡流動。想看更多現貨，就從直播社團開始。
+                </p>
+                <p className="text-xs tracking-[0.18em] text-gold mb-5 leading-relaxed">
+                  少量品 · 收藏級 · 特殊料
                 </p>
                 <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
                   <a
@@ -122,13 +120,19 @@ export default async function HomePage() {
                   >
                     加入 FB 競標社團
                   </a>
+                  <Link
+                    href="/line"
+                    className="text-cream underline decoration-gold underline-offset-4 hover:text-gold"
+                  >
+                    加 LINE 收通知
+                  </Link>
                   <a
                     href="https://jambolive.tv/shop/62349/product/fb/"
                     target="_blank"
                     rel="noopener"
                     className="text-cream underline decoration-gold underline-offset-4 hover:text-gold"
                   >
-                    看就醬播商城
+                    看商城現貨
                   </a>
                 </div>
               </div>
