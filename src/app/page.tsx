@@ -34,6 +34,12 @@ export default async function HomePage() {
   const heroImageUrl = heroImageSource
     ? urlForImage(heroImageSource)?.width(1800).height(1050).fit('crop').url()
     : null
+  const articlesWithReading = articles.map((article) => ({
+    ...article,
+    readingMinutes: estimateReadingMinutes((article as any).body),
+  }))
+  const featuredArticle = articlesWithReading[0]
+  const secondaryArticles = articlesWithReading.slice(1, 6)
 
   return (
     <>
@@ -171,6 +177,85 @@ export default async function HomePage() {
                   </span>
                 </Link>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 選香路線 ===== */}
+      <section className="bg-cream border-b border-gold/15">
+        <div className="container-x py-14 md:py-16">
+          <div className="grid gap-8 md:grid-cols-12 md:items-start">
+            <div className="md:col-span-4">
+              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
+                Choose Your Route
+              </p>
+              <h2 className="font-serif text-2xl md:text-3xl text-navy leading-snug mb-4">
+                不同的人，第一支香不該買一樣的
+              </h2>
+              <p className="text-sm text-woodLight leading-relaxed">
+                香不是越貴越適合。先看你要的是日常使用、送禮，還是收藏玩料，才不會買到規格很好但用不到的東西。
+              </p>
+            </div>
+            <div className="md:col-span-8 grid gap-4 sm:grid-cols-3">
+              {[
+                {
+                  title: '日常點香',
+                  body: '先挑燃燒乾淨、香韻穩、價格能長期使用的線香。',
+                  action: '看線香挑選',
+                  href: '/blog/agarwood-incense-binder-ratio-explained',
+                },
+                {
+                  title: '新手入門',
+                  body: '先建立真假、產地、沉水與價格的基本判斷。',
+                  action: '看新手指南',
+                  href: '/blog/how-to-pick-agarwood-beginner-guide',
+                },
+                {
+                  title: '收藏玩料',
+                  body: '重點看油線、結香、產區特徵與現場香韻表現。',
+                  action: '加入直播社團',
+                  href: 'https://www.facebook.com/groups/1789214647984397',
+                },
+              ].map((route, index) => {
+                const isExternal = route.href.startsWith('https://')
+                const className =
+                  'group flex min-h-[13rem] flex-col justify-between rounded-lg border border-gold/20 bg-white p-5 transition-colors hover:border-gold/60'
+                const content = (
+                  <>
+                    <div>
+                      <p className="text-xs text-goldDark mb-4">
+                        0{index + 1}
+                      </p>
+                      <h3 className="text-xl text-navy mb-3">
+                        {route.title}
+                      </h3>
+                      <p className="text-sm text-woodLight leading-relaxed">
+                        {route.body}
+                      </p>
+                    </div>
+                    <span className="mt-6 text-sm text-goldDark group-hover:text-navy">
+                      {route.action} →
+                    </span>
+                  </>
+                )
+
+                return isExternal ? (
+                  <a
+                    key={route.href}
+                    href={route.href}
+                    target="_blank"
+                    rel="noopener"
+                    className={className}
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <Link key={route.href} href={route.href} className={className}>
+                    {content}
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -317,17 +402,24 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {articles.length > 0 ? (
-            <div className="grid md:grid-cols-3 gap-6">
-              {articles.slice(0, 6).map((a) => (
-                <ArticleCard
-                  key={a._id}
-                  article={{
-                    ...a,
-                    readingMinutes: estimateReadingMinutes((a as any).body),
-                  }}
-                />
-              ))}
+          {articlesWithReading.length > 0 ? (
+            <div className="grid gap-6 lg:grid-cols-12 lg:items-stretch">
+              {featuredArticle && (
+                <div className="lg:col-span-6">
+                  <FeaturedArticleCard article={featuredArticle} />
+                </div>
+              )}
+              <div className="grid gap-5 sm:grid-cols-2 lg:col-span-6">
+                {secondaryArticles.map((a) => (
+                  <ArticleCard key={a._id} article={a} />
+                ))}
+              </div>
+              <Link
+                href="/blog"
+                className="sm:hidden inline-flex text-sm text-navy hover:text-goldDark border-b border-gold pb-0.5 justify-self-start"
+              >
+                看全部文章 →
+              </Link>
             </div>
           ) : (
             <EmptyState
@@ -359,10 +451,48 @@ export default async function HomePage() {
         </div>
 
         {products.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-            {products.map((p) => (
-              <ProductCard key={p._id} product={p} />
-            ))}
+          <div className="grid gap-6 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <div className="sticky top-24 rounded-lg border border-gold/20 bg-cream p-5 md:p-6">
+                <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
+                  Buying Notes
+                </p>
+                <h3 className="text-xl text-navy mb-4">
+                  本週精選先看三件事
+                </h3>
+                <div className="space-y-4 text-sm text-woodLight leading-relaxed">
+                  <p>
+                    <span className="text-goldDark font-medium">香韻</span>
+                    ：清涼、甜、藥香、木質感，先挑自己每天聞得住的。
+                  </p>
+                  <p>
+                    <span className="text-goldDark font-medium">用途</span>
+                    ：日常點香、送禮、收藏，會影響預算與規格。
+                  </p>
+                  <p>
+                    <span className="text-goldDark font-medium">來源</span>
+                    ：能看原料、能講配方，才有辦法判斷價格。
+                  </p>
+                </div>
+                <Link
+                  href="/line"
+                  className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-navy px-4 py-3 text-sm font-medium text-cream transition hover:bg-navyDark"
+                >
+                  不確定先問香董 →
+                </Link>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4 md:gap-5 lg:col-span-8">
+              {products.map((p) => (
+                <ProductCard key={p._id} product={p} />
+              ))}
+            </div>
+            <Link
+              href="/shop"
+              className="sm:hidden inline-flex text-sm text-navy hover:text-goldDark border-b border-gold pb-0.5 justify-self-start"
+            >
+              看全部商品 →
+            </Link>
           </div>
         ) : (
           <EmptyState
@@ -376,19 +506,21 @@ export default async function HomePage() {
       {faq.length > 0 && (
         <section className="bg-cream py-16 md:py-20 border-y border-gold/15">
           <div className="container-x">
-            <div className="text-center mb-8">
-              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
-                FAQ
-              </p>
-              <h2 className="font-serif text-2xl md:text-3xl text-navy">
-                沉香常見問題
-              </h2>
-              <p className="text-sm text-woodLight mt-2">
-                新手最常問香董的問題
-              </p>
-            </div>
-            <div className="max-w-3xl mx-auto">
-              <FaqSection items={faq} title="" />
+            <div className="grid gap-8 md:grid-cols-12 md:items-start">
+              <div className="md:col-span-4">
+                <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
+                  FAQ
+                </p>
+                <h2 className="font-serif text-2xl md:text-3xl text-navy leading-snug mb-4">
+                  買之前，先把常見問題問完
+                </h2>
+                <p className="text-sm text-woodLight leading-relaxed">
+                  真正會影響購買的，通常不是名詞，而是保存、真假、香韻、價格與使用情境。
+                </p>
+              </div>
+              <div className="md:col-span-8">
+                <FaqSection items={faq} title="" />
+              </div>
             </div>
           </div>
         </section>
@@ -431,5 +563,72 @@ function EmptyState({ label, hint }: { label: string; hint: string }) {
       <p className="text-navy text-lg mb-1">{label}</p>
       <p className="text-sm text-woodLight">{hint}</p>
     </div>
+  )
+}
+
+function FeaturedArticleCard({ article }: { article: ArticleCardData }) {
+  const imageUrl = article.coverImage
+    ? urlForImage(article.coverImage)?.width(1100).height(780).url()
+    : null
+  const date = article.publishedAt
+    ? new Date(article.publishedAt).toLocaleDateString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).replace(/\//g, '.')
+    : ''
+
+  return (
+    <Link
+      href={`/blog/${article.slug}`}
+      className="group block h-full overflow-hidden rounded-lg border border-gold/20 bg-white transition-colors hover:border-gold/60"
+    >
+      <div className="relative aspect-[16/11] overflow-hidden bg-cream">
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={article.title}
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-sm text-gold/40">
+            （封面圖）
+          </div>
+        )}
+        <div className="absolute left-4 top-4 rounded bg-navy/90 px-3 py-1 text-xs text-cream">
+          本週先讀
+        </div>
+      </div>
+      <div className="p-5 md:p-6">
+        <div className="mb-3 flex flex-wrap items-center gap-3 text-[11px] text-woodLight">
+          {date && <span>{date}</span>}
+          {article.category && (
+            <>
+              <span className="opacity-50">·</span>
+              <span>{article.category.name}</span>
+            </>
+          )}
+          {article.readingMinutes && (
+            <>
+              <span className="opacity-50">·</span>
+              <span>閱讀時間 {article.readingMinutes} 分鐘</span>
+            </>
+          )}
+        </div>
+        <h3 className="mb-3 text-2xl leading-snug text-navy transition-colors group-hover:text-goldDark">
+          {article.title}
+        </h3>
+        {article.excerpt && (
+          <p className="line-clamp-3 text-sm leading-relaxed text-woodLight">
+            {article.excerpt}
+          </p>
+        )}
+        <p className="mt-5 inline-flex items-center gap-1 text-sm text-goldDark">
+          讀這篇建立判斷 →
+        </p>
+      </div>
+    </Link>
   )
 }
