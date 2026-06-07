@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/studio', '/api', '/_next'],
+        disallow: ['/studio', '/api'],
       },
       // 擋掉部分 AI 爬蟲，省 Vercel 流量（可後續再開放）
       { userAgent: 'GPTBot', disallow: '/' },
