@@ -32,6 +32,28 @@ export const revalidate = 300
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://xiangdong.tw'
 
+type SeoSalesGuide = {
+  answer: {
+    eyebrow: string
+    title: string
+    body: string
+  }
+  mistakes: string[]
+  method: Array<{
+    title: string
+    body: string
+  }>
+  audience: string[]
+  routes: Array<{
+    title: string
+    body: string
+    href: string
+    label: string
+    external?: boolean
+    primary?: boolean
+  }>
+}
+
 /**
  * HowTo 結構化資料 ── 給 Google / AI 看的「步驟教學」標記
  * 只有明確有步驟的教學文才會啟用、其他文章維持原狀。
@@ -94,6 +116,70 @@ const HOWTO_BY_SLUG: Record<
       {
         name: '問來源 ── 確認產地與管道',
         text: '直接問賣家「這支料從哪裡來？」可信賣家會明確回答產區（越南、印尼、芽莊⋯⋯）；只說「上等老料」或「大師收藏」這類含糊用詞的、要小心。',
+      },
+    ],
+  },
+}
+
+const SEO_SALES_GUIDE_BY_SLUG: Record<string, SeoSalesGuide> = {
+  'agarwood-sinking-water-value': {
+    answer: {
+      eyebrow: '先講結論',
+      title: '沉香會沉水，不代表一定比較貴。',
+      body:
+        '沉水只能說明密度與油脂條件達到某個程度。真正要判斷價值，還要一起看油脂分布、結香狀態、香韻表現、產區特徵與這塊料適合拿來做什麼。',
+    },
+    mistakes: [
+      '會沉水就是頂級',
+      '不沉水就是假貨',
+      '越黑就一定越貴',
+      '價格高就一定香',
+      '老闆說稀有就不敢問',
+    ],
+    method: [
+      {
+        title: '先看油脂分布',
+        body: '油脂是局部、線狀、片狀，還是整塊自然滲進木質裡，會影響香韻與價格。',
+      },
+      {
+        title: '再看結香狀態',
+        body: '結香方式會決定料子的層次。只看沉水，容易忽略它到底是自然成香還是後天處理。',
+      },
+      {
+        title: '一定要聞香韻',
+        body: '真正在使用時，決定你喜不喜歡的是香韻，不是一杯水裡沉下去的速度。',
+      },
+      {
+        title: '最後才看用途',
+        body: '日常點香、送禮、收藏玩料，該看的重點不同，預算也不該用同一套標準。',
+      },
+    ],
+    audience: [
+      '第一次買沉香的人',
+      '被沉水說法搞混的人',
+      '想送禮但怕買錯的人',
+      '已經買過幾次，想開始看懂價格的人',
+    ],
+    routes: [
+      {
+        title: '不確定怎麼選',
+        body: '先把預算、用途、喜歡的香韻告訴香董，少走冤枉路。',
+        href: '/line',
+        label: '加 LINE 問香董',
+        primary: true,
+      },
+      {
+        title: '想看固定現貨',
+        body: '日常線香、試香組與固定品項，先從商城看目前有什麼。',
+        href: '/shop',
+        label: '看商城現貨',
+      },
+      {
+        title: '想看特殊料',
+        body: '少量料、收藏級、直播競標品，通常會在社團裡流動。',
+        href: 'https://www.facebook.com/groups/1789214647984397',
+        label: '加入 FB 競標社團',
+        external: true,
       },
     ],
   },
@@ -201,6 +287,7 @@ export default async function ArticlePage({
 
   const toc = extractToc(article.body)
   const url = `${SITE_URL}/blog/${slug}`
+  const seoSalesGuide = SEO_SALES_GUIDE_BY_SLUG[slug]
 
   // 麵包屑
   const breadcrumb = [
@@ -302,6 +389,8 @@ export default async function ArticlePage({
         </div>
       )}
 
+      {seoSalesGuide && <SeoSalesGuideBlock guide={seoSalesGuide} />}
+
       {/* === Body + TOC === */}
       <div className="container-x pb-10">
         <div className="grid lg:grid-cols-[1fr,minmax(0,720px),1fr] gap-8">
@@ -354,5 +443,141 @@ export default async function ArticlePage({
         </div>
       </div>
     </article>
+  )
+}
+
+function SeoSalesGuideBlock({ guide }: { guide: SeoSalesGuide }) {
+  return (
+    <section className="mb-10 border-y border-gold/15 bg-cream py-10 md:py-12">
+      <div className="container-x">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid gap-8 lg:grid-cols-[1.05fr,0.95fr] lg:items-start">
+            <div>
+              <p className="mb-3 text-xs tracking-[3px] text-goldDark uppercase">
+                {guide.answer.eyebrow}
+              </p>
+              <h2 className="mb-4 font-serif text-2xl leading-snug text-navy md:text-3xl">
+                {guide.answer.title}
+              </h2>
+              <p className="text-base leading-relaxed text-woodLight">
+                {guide.answer.body}
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-gold/20 bg-white p-4 md:p-5">
+              <p className="mb-3 text-sm font-medium text-navy">
+                新手最常踩的坑
+              </p>
+              <ul className="space-y-2.5">
+                {guide.mistakes.map((mistake) => (
+                  <li
+                    key={mistake}
+                    className="flex gap-2 text-sm leading-snug text-woodLight"
+                  >
+                    <span className="mt-0.5 text-goldDark">×</span>
+                    <span>{mistake}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-8 border-t border-gold/20 pt-7">
+            <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="mb-2 text-xs tracking-[3px] text-goldDark uppercase">
+                  香董判斷法
+                </p>
+                <h3 className="font-serif text-xl text-navy">
+                  不只看沉不沉水，我會照這幾步判斷。
+                </h3>
+              </div>
+              <p className="max-w-sm text-sm leading-relaxed text-woodLight">
+                先把判斷順序抓對，價格才有討論基礎。
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {guide.method.map((step, index) => (
+                <div
+                  key={step.title}
+                  className="rounded-lg border border-gold/20 bg-white p-4"
+                >
+                  <p className="mb-3 text-xs text-goldDark">
+                    0{index + 1}
+                  </p>
+                  <h4 className="mb-2 text-base text-navy">
+                    {step.title}
+                  </h4>
+                  <p className="text-sm leading-relaxed text-woodLight">
+                    {step.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 grid gap-5 border-t border-gold/20 pt-7 lg:grid-cols-[0.9fr,1.1fr]">
+            <div>
+              <p className="mb-2 text-xs tracking-[3px] text-goldDark uppercase">
+                這篇適合誰
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {guide.audience.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-gold/20 bg-white px-3 py-1.5 text-xs text-navy"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              {guide.routes.map((route) => {
+                const className = route.primary
+                  ? 'group flex min-h-36 flex-col justify-between rounded-lg bg-navy p-4 text-cream transition hover:bg-navyDark'
+                  : 'group flex min-h-36 flex-col justify-between rounded-lg border border-gold/20 bg-white p-4 text-navy transition-colors hover:border-gold/60'
+                const bodyClass = route.primary
+                  ? 'text-sm leading-relaxed text-cream/78'
+                  : 'text-sm leading-relaxed text-woodLight'
+                const labelClass = route.primary
+                  ? 'mt-4 text-sm text-gold'
+                  : 'mt-4 text-sm text-goldDark group-hover:text-navy'
+                const headingClass = route.primary
+                  ? 'mb-2 text-base text-cream'
+                  : 'mb-2 text-base text-navy'
+                const content = (
+                  <>
+                    <div>
+                      <h4 className={headingClass}>{route.title}</h4>
+                      <p className={bodyClass}>{route.body}</p>
+                    </div>
+                    <span className={labelClass}>{route.label} →</span>
+                  </>
+                )
+
+                return route.external ? (
+                  <a
+                    key={route.href}
+                    href={route.href}
+                    target="_blank"
+                    rel="noopener"
+                    className={className}
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <Link key={route.href} href={route.href} className={className}>
+                    {content}
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
