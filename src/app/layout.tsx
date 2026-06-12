@@ -85,7 +85,6 @@ export default async function RootLayout({
     .fetch<any>(SITE_SETTINGS_QUERY)
     .catch(() => null)
 
-  const gaId = settings?.gaId
   const shouldLoadClarity = process.env.VERCEL_ENV === 'production'
 
   return (
@@ -111,22 +110,6 @@ export default async function RootLayout({
             ],
           }}
         />
-        {gaId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4-init" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gaId}', { anonymize_ip: true });
-              `}
-            </Script>
-          </>
-        )}
         {shouldLoadClarity && (
           <Script id="microsoft-clarity" strategy="afterInteractive">
             {`

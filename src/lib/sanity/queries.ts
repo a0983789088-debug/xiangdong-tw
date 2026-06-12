@@ -12,7 +12,6 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   homepageFaq[]{ question, answer },
   ctas[]{ type, title, description, url },
   floatingButton,
-  gaId,
   metaPixelId,
   searchConsoleVerification
 }`
