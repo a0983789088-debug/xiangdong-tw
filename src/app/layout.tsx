@@ -28,6 +28,7 @@ const DEFAULT_TITLE = '香董｜真正的天然好香 · 沉香 · 線香 · 佛
 const DEFAULT_DESCRIPTION =
   '香董，台灣沉香買賣商，做這行十幾年。沉香真假辨識、產地差別、保存方法、線香怎麼挑、佛珠選擇 ── 用實戰經驗一篇篇講清楚。不靠故事、不靠大師，靠看得見的原料。'
 const CLARITY_PROJECT_ID = 'x5x1pa18i4'
+const GA_MEASUREMENT_ID = 'G-6LDJXZ6EH5'
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityClient.fetch<any>(SITE_SETTINGS_QUERY).catch(() => null)
@@ -85,7 +86,7 @@ export default async function RootLayout({
     .fetch<any>(SITE_SETTINGS_QUERY)
     .catch(() => null)
 
-  const shouldLoadClarity = process.env.VERCEL_ENV === 'production'
+  const shouldLoadAnalytics = process.env.VERCEL_ENV === 'production'
 
   return (
     <html lang="zh-TW" className={`${notoSans.variable} ${notoSerif.variable}`}>
@@ -110,16 +111,30 @@ export default async function RootLayout({
             ],
           }}
         />
-        {shouldLoadClarity && (
-          <Script id="microsoft-clarity" strategy="afterInteractive">
-            {`
-              (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-              })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");
-            `}
-          </Script>
+        {shouldLoadAnalytics && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+            <Script id="microsoft-clarity" strategy="afterInteractive">
+              {`
+                (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");
+              `}
+            </Script>
+          </>
         )}
 
         <Header />
