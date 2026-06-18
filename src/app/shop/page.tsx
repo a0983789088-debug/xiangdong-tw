@@ -8,9 +8,9 @@ import { Breadcrumb } from '@/components/Breadcrumb'
 export const revalidate = 300
 
 export const metadata: Metadata = {
-  title: '商品櫥窗｜沉香 · 線香 · 佛珠 · 原料',
+  title: '天然沉香、線香與佛珠商品櫥窗｜香董',
   description:
-    '香董精選商品櫥窗：沉香、線香、佛珠、製香原料。每一件附產地、香韻、適合誰的說明。點商品跳轉就醬播商城選購、直播洽詢。',
+    '香董精選天然沉香、天然線香、沉香佛珠與製香原料。每一件附產地、香韻、適合誰的說明，點商品可到就醬播商城選購或直播洽詢。',
   alternates: { canonical: '/shop' },
 }
 
@@ -30,10 +30,10 @@ export default async function ShopPage() {
           Shop · 商品櫥窗
         </p>
         <h1 className="font-serif text-3xl md:text-4xl text-navy mb-4">
-          香董精選商品
+          天然沉香、線香與佛珠商品櫥窗
         </h1>
         <p className="text-base text-woodLight max-w-2xl leading-relaxed">
-          這裡是櫥窗、不是結帳頁。每一件商品點下去，會跳到香董在
+          這裡整理香董精選的沉香、天然線香、沉香佛珠與製香原料。每一件商品點下去，會跳到香董在
           <strong className="text-navy">「就醬播」</strong>的商品頁完成購買或洽詢。
           收藏級單一件多半在 FB 直播競標釋出。
         </p>

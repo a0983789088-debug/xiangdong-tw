@@ -7,8 +7,9 @@ import { ArticleCard, type ArticleCardData } from '@/components/ArticleCard'
 export const revalidate = 300
 
 export const metadata: Metadata = {
-  title: '香董文章',
-  description: '香董把這十幾年買賣沉香、開料、品香的經驗用文字記下來。',
+  title: '香董文章｜沉香價格、真假辨識、線香推薦與佛珠知識',
+  description:
+    '香董文章整理沉香價格、真假辨識、沉香功效、天然線香推薦、線香使用、佛珠選購與新手避雷，用十幾年買賣與製香經驗講清楚。',
   alternates: { canonical: '/blog' },
 }
 
@@ -44,7 +45,15 @@ export default async function BlogPage() {
 
   return (
     <main className="container-x py-10">
-      <h1 className="font-serif text-3xl text-navy mb-6">香董文章</h1>
+      <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
+        Agarwood · Incense · Beads
+      </p>
+      <h1 className="font-serif text-3xl text-navy mb-3">
+        沉香、線香與佛珠的實戰文章
+      </h1>
+      <p className="text-base text-woodLight max-w-2xl leading-relaxed mb-8">
+        從沉香價格、真假辨識、天然線香推薦到沉香佛珠選擇，香董把十幾年買賣、開料與製香經驗整理成新手也看得懂的文章。
+      </p>
       {articles.length === 0 ? (
         <p className="text-woodLight">文章準備中。</p>
       ) : (

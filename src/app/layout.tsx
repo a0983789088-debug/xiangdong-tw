@@ -24,9 +24,10 @@ const notoSerif = Noto_Serif_TC({
   display: 'swap',
 })
 
-const DEFAULT_TITLE = '香董｜真正的天然好香 · 沉香 · 線香 · 佛珠'
+const LEGACY_SITE_TITLE = '香董｜真正的天然好香 · 沉香 · 線香 · 佛珠'
+const DEFAULT_TITLE = '香董｜天然沉香、天然線香與佛珠｜真正的天然好香'
 const DEFAULT_DESCRIPTION =
-  '香董，台灣沉香買賣商，做這行十幾年。沉香真假辨識、產地差別、保存方法、線香怎麼挑、佛珠選擇 ── 用實戰經驗一篇篇講清楚。不靠故事、不靠大師，靠看得見的原料。'
+  '香董，台灣沉香買賣商，做這行十幾年。沉香真假辨識、沉香價格、產地差別、天然線香推薦、佛珠選擇，用實戰經驗一篇篇講清楚。'
 const CLARITY_PROJECT_ID = 'x5x1pa18i4'
 const GA_MEASUREMENT_ID = 'G-6LDJXZ6EH5'
 
@@ -37,8 +38,14 @@ export async function generateMetadata(): Promise<Metadata> {
   // 只有正式網域才讓 Google 索引；preview / dev 一律 noindex
   const isProductionHost = process.env.VERCEL_ENV === 'production'
 
-  const title = settings?.siteTitle || DEFAULT_TITLE
-  const description = settings?.siteDescription || DEFAULT_DESCRIPTION
+  const title =
+    !settings?.siteTitle || settings.siteTitle === LEGACY_SITE_TITLE
+      ? DEFAULT_TITLE
+      : settings.siteTitle
+  const description =
+    !settings?.siteDescription || settings.siteTitle === LEGACY_SITE_TITLE
+      ? DEFAULT_DESCRIPTION
+      : settings.siteDescription
   const gscCode = settings?.searchConsoleVerification
 
   // og:image: 優先用 defaultOgImage、沒有就用 founderPhoto

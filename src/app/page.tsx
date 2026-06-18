@@ -156,16 +156,16 @@ export default async function HomePage() {
             <div className="md:col-span-8 grid gap-3 sm:grid-cols-3">
               {[
                 {
+                  label: '沉香價格怎麼看才合理？',
+                  href: '/blog/why-agarwood-prices-vary-so-much',
+                },
+                {
                   label: '沉香會沉水就比較貴嗎？',
                   href: '/blog/agarwood-sinking-water-value',
                 },
                 {
-                  label: '線香黏粉越低越好嗎？',
+                  label: '線香推薦先看什麼？',
                   href: '/blog/agarwood-incense-binder-ratio-explained',
-                },
-                {
-                  label: '越南、印尼、檀香差在哪？',
-                  href: '/blog/vietnam-indonesia-sandalwood-comparison',
                 },
               ].map((item) => (
                 <Link
@@ -285,34 +285,34 @@ export default async function HomePage() {
           <TopicHub
             icon="❖"
             title="沉香知識"
-            intro="什麼是沉香、怎麼分辨真假、各產地的差別。新手最常踩雷的地方都在這。"
+            intro="沉香真假、價格、產地、沉水與味道差異。新手最常踩雷的地方都在這。"
             items={[
+              { label: '沉香價格為什麼差很多？', href: '/blog/why-agarwood-prices-vary-so-much' },
               { label: '真假沉香怎麼辨識？', href: '/blog/agarwood-real-vs-fake' },
               { label: '沉水能不能判斷價格？', href: '/blog/agarwood-sinking-water-value' },
-              { label: '新手第一塊沉香怎麼挑？', href: '/blog/how-to-pick-agarwood-beginner-guide' },
             ]}
             mainLink="/blog?topic=agarwood-knowledge"
             mainLinkLabel="看沉香知識全部文章"
           />
           <TopicHub
             icon="❀"
-            title="線香使用"
-            intro="從日常一支香開始，把香放進生活。新手線香怎麼挑、怎麼用、怎麼配空間。"
+            title="線香推薦"
+            intro="從日常一支天然線香開始，把香放進生活。新手先看成分、黏粉、燃燒與香氣表現。"
             items={[
+              { label: '天然線香和化學線香差在哪？', href: '/blog/natural-vs-chemical-incense-sticks' },
               { label: '黏粉比例越低越好嗎？', href: '/blog/agarwood-incense-binder-ratio-explained' },
               { label: '點香後為什麼別用嘴吹？', href: '/blog/how-to-light-and-extinguish-incense' },
-              { label: '越南、印尼、檀香怎麼選？', href: '/blog/vietnam-indonesia-sandalwood-comparison' },
             ]}
             mainLink="/blog?topic=incense-culture"
             mainLinkLabel="看線香相關文章"
           />
           <TopicHub
             icon="◎"
-            title="佛珠文化"
-            intro="香木手珠不只是配件。從木質差異、配戴保養到收藏觀念，講清楚。"
+            title="沉香佛珠"
+            intro="沉香佛珠不只是配件。從木質、油線、珠數、香氣到收藏觀念，先把選購邏輯講清楚。"
             items={[
               { label: '先看木質、油線還是香氣？', href: '/blog/how-to-pick-agarwood-beginner-guide' },
-              { label: '為什麼價格會差很多？', href: '/blog/agarwood-real-vs-fake' },
+              { label: '為什麼價格會差很多？', href: '/blog/why-agarwood-prices-vary-so-much' },
               { label: '買之前先問哪三件事？', href: '/line' },
             ]}
             mainLink="/blog?topic=incense-culture"
