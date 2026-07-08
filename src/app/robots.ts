@@ -11,11 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/studio', '/api'],
       },
-      // 擋掉部分 AI 爬蟲，省 Vercel 流量（可後續再開放）
-      { userAgent: 'GPTBot', disallow: '/' },
-      { userAgent: 'CCBot', disallow: '/' },
-      { userAgent: 'anthropic-ai', disallow: '/' },
-      { userAgent: 'Claude-Web', disallow: '/' },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
   }
