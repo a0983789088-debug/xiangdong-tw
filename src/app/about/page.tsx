@@ -15,6 +15,22 @@ export const metadata: Metadata = {
   description:
     '香董創業故事：18 歲入伍、退伍夜間部、中國信託、保誠人壽、2008 創業。我不是大師，也沒想改變世界，只想做一件自己相信的事。',
   alternates: { canonical: '/about' },
+  openGraph: {
+    type: 'website',
+    locale: 'zh_TW',
+    siteName: '香董',
+    title: '關於香董｜從打工仔到沉香買賣商的十幾年',
+    description:
+      '香董創業故事：18 歲入伍、退伍夜間部、中國信託、保誠人壽、2008 創業。我不是大師，也沒想改變世界，只想做一件自己相信的事。',
+    url: 'https://xiangdong.tw/about',
+    images: [
+      {
+        url: 'https://cdn.sanity.io/images/3zcpri8u/production/0c1e0af9fc086aa30ced2d021f00a80936570387-954x955.jpg?rect=0,228,954,501&w=1200&h=630&fit=crop&auto=format',
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 }
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://xiangdong.tw'
