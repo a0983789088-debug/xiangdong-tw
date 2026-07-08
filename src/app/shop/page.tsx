@@ -8,10 +8,26 @@ import { Breadcrumb } from '@/components/Breadcrumb'
 export const revalidate = 300
 
 export const metadata: Metadata = {
-  title: '天然沉香、線香與佛珠商品櫥窗｜香董',
+  title: '天然沉香、線香與佛珠商品櫥窗',
   description:
     '香董精選天然沉香、天然線香、沉香佛珠與製香原料。每一件附產地、香韻、適合誰的說明，點商品可到就醬播商城選購或直播洽詢。',
   alternates: { canonical: '/shop' },
+  openGraph: {
+    type: 'website',
+    locale: 'zh_TW',
+    siteName: '香董',
+    title: '天然沉香、線香與佛珠商品櫥窗｜香董',
+    description:
+      '香董精選天然沉香、天然線香、沉香佛珠與製香原料。每一件附產地、香韻、適合誰的說明，點商品可到就醬播商城選購或直播洽詢。',
+    url: 'https://xiangdong.tw/shop',
+    images: [
+      {
+        url: 'https://cdn.sanity.io/images/3zcpri8u/production/0c1e0af9fc086aa30ced2d021f00a80936570387-954x955.jpg?rect=0,228,954,501&w=1200&h=630&fit=crop&auto=format',
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 }
 
 export default async function ShopPage() {
