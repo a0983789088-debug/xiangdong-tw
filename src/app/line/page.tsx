@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Breadcrumb } from '@/components/Breadcrumb'
+import { MetaPixelTrackedLink } from '@/components/MetaPixelTrackedLink'
 import { CTA_PRESETS } from '@/lib/cta'
 
 export const metadata: Metadata = {
@@ -52,15 +53,16 @@ export default function LineLandingPage() {
           直播開播提醒 ── 一次加好友、全部都收。
         </p>
 
-        <a
+        <MetaPixelTrackedLink
           href={CTA_PRESETS.line.url}
           target="_blank"
           rel="noopener"
+          eventName="Lead"
           className="inline-flex items-center justify-center gap-3 w-full sm:w-auto bg-lineGreen text-white px-8 py-4 rounded-md text-base font-medium hover:opacity-90 transition shadow-sm mb-3"
         >
           <span>加入香董 LINE 官方帳號</span>
           <span>→</span>
-        </a>
+        </MetaPixelTrackedLink>
         <p className="text-xs text-woodLight mb-12">
           連結會打開 LINE App。完成加好友後，
           <span className="text-navy font-medium">系統會自動傳《沉香新手避雷指南》PDF 下載連結給你。</span>
@@ -88,14 +90,26 @@ export default function LineLandingPage() {
             或直接到 FB 競標社團看每週直播。
           </p>
           <div className="space-y-2">
-            <a href={CTA_PRESETS.fbKnowledge.url} target="_blank" rel="noopener"
-               className="block text-navy underline decoration-gold underline-offset-4 hover:text-goldDark">
+            <MetaPixelTrackedLink
+              href={CTA_PRESETS.fbKnowledge.url}
+              target="_blank"
+              rel="noopener"
+              eventName="JoinGroup"
+              eventParams={{ group_name: '香董職人老實說｜沉香知識 × 香友交流' }}
+              className="block text-navy underline decoration-gold underline-offset-4 hover:text-goldDark"
+            >
               → 加入 FB 香董職人老實說社團
-            </a>
-            <a href={CTA_PRESETS.fbBidding.url} target="_blank" rel="noopener"
-               className="block text-navy underline decoration-gold underline-offset-4 hover:text-goldDark">
+            </MetaPixelTrackedLink>
+            <MetaPixelTrackedLink
+              href={CTA_PRESETS.fbBidding.url}
+              target="_blank"
+              rel="noopener"
+              eventName="JoinGroup"
+              eventParams={{ group_name: '香董的真沉香拍賣' }}
+              className="block text-navy underline decoration-gold underline-offset-4 hover:text-goldDark"
+            >
               → 加入 FB 直播競標社團
-            </a>
+            </MetaPixelTrackedLink>
           </div>
         </div>
       </section>
