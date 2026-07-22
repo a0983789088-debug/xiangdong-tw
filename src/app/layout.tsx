@@ -12,6 +12,7 @@ import { SITE_SETTINGS_QUERY } from '@/lib/sanity/queries'
 import { urlForImage } from '@/lib/sanity/image'
 import { JsonLd } from '@/components/JsonLd'
 import { META_PIXEL_ID } from '@/lib/metaPixel'
+import { GOOGLE_ADS_CONVERSION_ID } from '@/lib/googleAds'
 
 const notoSans = Noto_Sans_TC({
   subsets: ['latin'],
@@ -133,6 +134,11 @@ export default async function RootLayout({
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
                 gtag('config', '${GA_MEASUREMENT_ID}');
+                ${
+                  GOOGLE_ADS_CONVERSION_ID
+                    ? `gtag('config', '${GOOGLE_ADS_CONVERSION_ID}');`
+                    : ''
+                }
               `}
             </Script>
             <Script id="microsoft-clarity" strategy="afterInteractive">

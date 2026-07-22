@@ -58,6 +58,7 @@ export default function LineLandingPage() {
           target="_blank"
           rel="noopener"
           eventName="Lead"
+          googleAdsConversion="lineLead"
           className="inline-flex items-center justify-center gap-3 w-full sm:w-auto bg-lineGreen text-white px-8 py-4 rounded-md text-base font-medium hover:opacity-90 transition shadow-sm mb-3"
         >
           <span>加入香董 LINE 官方帳號</span>
