@@ -118,7 +118,7 @@ export default async function RootLayout({
               'https://www.facebook.com/groups/260642251054970',
               'https://www.instagram.com/baujie_agarwood/',
               'https://www.tiktok.com/@baojieagarwood',
-              'https://jambolive.tv/shop/62349/product/fb/',
+              'https://baujie-agarwood.my1shop.com/',
             ],
           }}
         />

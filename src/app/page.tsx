@@ -127,7 +127,7 @@ export default async function HomePage() {
                     加 LINE 收通知
                   </Link>
                   <a
-                    href="https://jambolive.tv/shop/62349/product/fb/"
+                    href="https://baujie-agarwood.my1shop.com/"
                     target="_blank"
                     rel="noopener"
                     className="text-cream underline decoration-gold underline-offset-4 hover:text-gold"

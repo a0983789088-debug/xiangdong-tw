@@ -55,7 +55,7 @@ export default async function ShopPage() {
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <a
-            href="https://jambolive.tv/shop/62349/product/fb/"
+            href="https://baujie-agarwood.my1shop.com/"
             target="_blank"
             rel="noopener"
             className="inline-flex items-center gap-1.5 bg-gold text-navy px-4 py-2 rounded-md text-sm font-medium hover:opacity-90"

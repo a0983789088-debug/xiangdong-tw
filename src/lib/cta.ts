@@ -46,7 +46,7 @@ export const CTA_PRESETS: Record<CtaType, CtaItem> = {
     type: 'shop',
     title: '逛香董香舖（就醬播）',
     description: '直播即時上新、藏品級單一件',
-    url: 'https://jambolive.tv/shop/62349/product/fb/',
+    url: 'https://baujie-agarwood.my1shop.com/',
   },
 }
 
