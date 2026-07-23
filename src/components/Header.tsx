@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const NAV = [
   { href: '/blog', label: '香董文章' },
-  { href: '/shop', label: '商品櫥窗' },
+  { href: '/shop', label: '香董商城' },
   { href: '/about', label: '關於香董' },
 ]
 

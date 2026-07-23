@@ -5,7 +5,7 @@ const CTA_TYPES = [
   { title: 'LINE 社群（香董香生活）', value: 'community' },
   { title: 'FB 競標社團', value: 'fbBidding' },
   { title: 'FB 知識社團（職人老實說）', value: 'fbKnowledge' },
-  { title: '就醬播商城', value: 'shop' },
+  { title: '香董商城', value: 'shop' },
 ]
 
 export const siteSettings = defineType({

@@ -14,7 +14,7 @@ export function RelatedProducts({ products }: { products: ProductCardData[] }) {
         ))}
       </div>
       <p className="text-xs text-woodLight mt-4 text-center">
-        點商品 → 跳轉就醬播商城選購
+        點商品 → 前往香董商城選購
       </p>
     </section>
   )

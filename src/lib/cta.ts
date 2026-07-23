@@ -44,10 +44,19 @@ export const CTA_PRESETS: Record<CtaType, CtaItem> = {
   },
   shop: {
     type: 'shop',
-    title: '逛香董香舖（就醬播）',
-    description: '直播即時上新、藏品級單一件',
+    title: '逛香董香品商城',
+    description: '商城現貨、線香與香材品項',
     url: 'https://baujie-agarwood.my1shop.com/',
   },
+}
+
+export function normalizeCtaItem(cta: CtaItem): CtaItem {
+  if (cta.type === 'shop') return CTA_PRESETS.shop
+  return cta
+}
+
+export function normalizeSiteCtas(ctas: CtaItem[] | null | undefined) {
+  return ctas?.map(normalizeCtaItem)
 }
 
 /**
@@ -63,7 +72,7 @@ export function resolveCtasForArticle(
   const ctasByType: Record<string, CtaItem> = { ...CTA_PRESETS }
   if (siteCtas) {
     for (const c of siteCtas) {
-      if (c?.type) ctasByType[c.type] = c
+      if (c?.type) ctasByType[c.type] = normalizeCtaItem(c)
     }
   }
 

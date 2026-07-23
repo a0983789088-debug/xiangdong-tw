@@ -434,7 +434,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ===== 商品櫥窗 ===== */}
+      {/* ===== 香董商城 ===== */}
       <section className="container-x py-16 md:py-20">
         <div className="flex items-end justify-between mb-8">
           <div>
@@ -443,7 +443,7 @@ export default async function HomePage() {
             </p>
             <h2 className="font-serif text-2xl md:text-3xl text-navy">本週精選</h2>
             <p className="text-sm text-woodLight mt-2">
-              先看適合誰與香韻，再到就醬播商城下單或洽詢。
+              先看適合誰與香韻，再到香董商城下單或洽詢。
             </p>
           </div>
           <Link

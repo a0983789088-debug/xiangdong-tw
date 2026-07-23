@@ -62,10 +62,10 @@ export const product = defineType({
     }),
     defineField({
       name: 'externalUrl',
-      title: '就醬播商品連結',
+      title: '香董商城商品連結',
       type: 'url',
       group: 'main',
-      description: '貼上 jambolive.tv/... 的連結',
+      description: '貼上香董商城商品頁連結',
       validation: (Rule) =>
         Rule.required().uri({ scheme: ['http', 'https'] }),
     }),

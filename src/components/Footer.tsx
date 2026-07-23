@@ -24,7 +24,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-cream/70">
               <li><Link href="/" className="hover:text-gold">首頁</Link></li>
               <li><Link href="/blog" className="hover:text-gold">香董文章</Link></li>
-              <li><Link href="/shop" className="hover:text-gold">商品櫥窗</Link></li>
+              <li><Link href="/shop" className="hover:text-gold">香董商城</Link></li>
               <li><Link href="/about" className="hover:text-gold">關於香董</Link></li>
             </ul>
           </div>
@@ -55,7 +55,7 @@ export function Footer() {
               </li>
               <li>
                 <a href={CTA_PRESETS.shop.url} target="_blank" rel="noopener" className="hover:text-gold">
-                  就醬播商城
+                  香董商城
                 </a>
               </li>
             </ul>

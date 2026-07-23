@@ -6,9 +6,11 @@ export type ProductCardData = {
   name: string
   slug: string
   mainImage?: any
+  mainImageUrl?: string
   shortDescription?: string
   externalUrl: string
   isCollectible?: boolean
+  priceLabel?: string
   // 知識型欄位
   productType?: string
   aromaProfile?: string
@@ -28,14 +30,17 @@ const PRODUCT_TYPE_LABEL: Record<string, string> = {
 export function ProductCard({ product }: { product: ProductCardData }) {
   const imageUrl = product.mainImage
     ? urlForImage(product.mainImage)?.width(700).height(700).url()
-    : null
+    : product.mainImageUrl || null
+  const productUrl = product.externalUrl.includes('jambolive.tv')
+    ? 'https://baujie-agarwood.my1shop.com/'
+    : product.externalUrl
   const typeLabel = product.productType
     ? PRODUCT_TYPE_LABEL[product.productType] || product.productType
     : null
 
   return (
     <a
-      href={product.externalUrl}
+      href={productUrl}
       target="_blank"
       rel="noopener"
       className={`group block rounded-lg overflow-hidden bg-white transition-colors ${
@@ -84,6 +89,11 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             {product.origin}
           </p>
         )}
+        {product.priceLabel && (
+          <p className="text-sm text-navy font-medium mb-2">
+            {product.priceLabel}
+          </p>
+        )}
         {/* 知識型資訊：香韻 + 適合誰 */}
         {(product.aromaProfile || product.targetAudience) && (
           <div className="space-y-0.5 mb-3 text-[11.5px] text-woodLight leading-relaxed">
@@ -107,7 +117,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
           </p>
         )}
         <p className="text-xs text-goldDark inline-flex items-center gap-1">
-          <span>{product.isCollectible ? '到就醬播洽詢' : '到就醬播選購'}</span>
+          <span>{product.isCollectible ? '到香董商城洽詢' : '到香董商城選購'}</span>
           <span>→</span>
         </p>
       </div>

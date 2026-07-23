@@ -61,7 +61,7 @@ export default function CommunityPage() {
             <ul className="space-y-2 text-sm text-wood">
               <li className="flex gap-2"><span className="text-gold">·</span>競標規則直播時公告</li>
               <li className="flex gap-2"><span className="text-gold">·</span>得標後 24 小時內聯絡</li>
-              <li className="flex gap-2"><span className="text-gold">·</span>付款連結走就醬播</li>
+              <li className="flex gap-2"><span className="text-gold">·</span>付款連結走香董商城</li>
               <li className="flex gap-2"><span className="text-gold">·</span>有任何問題可私訊香董</li>
             </ul>
           </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { CTA_PRESETS, type CtaItem } from '@/lib/cta'
+import { CTA_PRESETS, normalizeCtaItem, type CtaItem } from '@/lib/cta'
 
 type Settings = {
   floatingButton?: string
@@ -20,7 +20,9 @@ export function FloatingCta({ settings }: { settings: Settings }) {
 
   const type = settings?.floatingButton || 'line'
   const override = settings?.ctas?.find((c) => c.type === type)
-  const cta = override || (CTA_PRESETS as any)[type] || CTA_PRESETS.line
+  const cta = override
+    ? normalizeCtaItem(override)
+    : (CTA_PRESETS as any)[type] || CTA_PRESETS.line
 
   return (
     <a

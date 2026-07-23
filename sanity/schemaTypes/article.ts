@@ -12,7 +12,7 @@ const CTA_OPTIONS = [
   { title: '主推：LINE 加好友禮', value: 'line' },
   { title: '主推：FB 競標社團', value: 'community' },
   { title: '主推：FB 知識社團（職人老實說）', value: 'knowledge' },
-  { title: '主推：就醬播商城', value: 'shop' },
+  { title: '主推：香董商城', value: 'shop' },
 ]
 
 export const article = defineType({

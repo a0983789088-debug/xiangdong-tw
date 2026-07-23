@@ -13,6 +13,7 @@ import { urlForImage } from '@/lib/sanity/image'
 import { JsonLd } from '@/components/JsonLd'
 import { META_PIXEL_ID } from '@/lib/metaPixel'
 import { GOOGLE_ADS_CONVERSION_ID } from '@/lib/googleAds'
+import { normalizeSiteCtas } from '@/lib/cta'
 
 const notoSans = Noto_Sans_TC({
   subsets: ['latin'],
@@ -96,6 +97,9 @@ export default async function RootLayout({
   const settings = await sanityClient
     .fetch<any>(SITE_SETTINGS_QUERY)
     .catch(() => null)
+  const normalizedSettings = settings
+    ? { ...settings, ctas: normalizeSiteCtas(settings.ctas) }
+    : null
 
   const shouldLoadAnalytics = process.env.VERCEL_ENV === 'production'
 
@@ -185,7 +189,7 @@ export default async function RootLayout({
         <Header />
         <main className="min-h-[60vh]">{children}</main>
         <Footer />
-        <FloatingCta settings={settings} />
+        <FloatingCta settings={normalizedSettings} />
       </body>
     </html>
   )
