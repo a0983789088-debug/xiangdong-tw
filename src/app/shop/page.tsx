@@ -8,6 +8,8 @@ import { MY_SHOP_PRODUCTS } from '@/lib/myShopProducts'
 
 export const revalidate = 300
 
+type ShopProduct = (typeof MY_SHOP_PRODUCTS)[number]
+
 const SHOP_URL = 'https://baujie-agarwood.my1shop.com/'
 
 const SHOP_PROMISES = [
@@ -47,6 +49,48 @@ const PRODUCT_GROUPS = [
   { label: '日常香品', type: 'other' },
 ]
 
+const BEGINNER_GUIDES = [
+  {
+    kicker: '日常點香',
+    title: '想每天點一支，先從臥香或盤香開始',
+    text: '適合放在書房、客廳、睡前放鬆或固定薰香。氣味穩定、使用簡單，不需要準備太多器具。',
+    budget: 'NT$88 - 999',
+    tags: ['日常薰香', '新手友善', '空間使用'],
+    productSlugs: [
+      'indonesia-jiangzhen-coil',
+      'gubang-incense',
+      'tonga-incense',
+      'africa-sandalwood-coil',
+    ],
+  },
+  {
+    kicker: '製香 / 調香',
+    title: '想自己配香、做香，先看粉料',
+    text: '粉料適合製香、調配、試香氣基底，也適合已經知道自己喜歡沉香或檀香方向的人。',
+    budget: 'NT$50 - 1,200',
+    tags: ['製香原料', '可試比例', '價格透明'],
+    productSlugs: [
+      'mk',
+      'laoshan-powder',
+      'irian-extract-powder',
+      'africa-sandalwood-powder',
+    ],
+  },
+  {
+    kicker: '收藏 / 送禮',
+    title: '想買有存在感的品項，看手串與高階香材',
+    text: '適合送禮、佩戴收藏，或想挑一件比較有記憶點的香品。高價與限量品項建議先詢問再下單。',
+    budget: 'NT$660 - 5,100',
+    tags: ['收藏級', '送禮', '可先諮詢'],
+    productSlugs: [
+      'hku',
+      'kundian-powder',
+      'green-kinam-incense',
+      'agarwood-spray-lotion',
+    ],
+  },
+]
+
 export const metadata: Metadata = {
   title: '香董天然香品商城｜沉香線香與香材現貨',
   description:
@@ -79,6 +123,10 @@ export default function ShopPage() {
   const featuredProducts = products
     .filter((product) => product.isCollectible || product.productType === 'incense-stick')
     .slice(0, 4)
+  const beginnerGuides = BEGINNER_GUIDES.map((guide) => ({
+    ...guide,
+    products: findProductsBySlugs(products, guide.productSlugs),
+  }))
 
   return (
     <>
@@ -193,6 +241,69 @@ export default function ShopPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-cream border-b border-gold/15">
+        <div className="container-x py-12 md:py-16">
+          <div className="grid gap-4 md:grid-cols-12 md:items-end mb-7">
+            <div className="md:col-span-7">
+              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
+                Starter Guide
+              </p>
+              <h2 className="font-serif text-2xl md:text-3xl text-navy">
+                第一次買香，先從這 3 種需求選
+              </h2>
+              <p className="text-sm text-woodLight mt-2 leading-relaxed">
+                不用一次看懂所有產地和香材，先從使用情境切入，選到方向後再比較價格與規格。
+              </p>
+            </div>
+            <div className="md:col-span-5">
+              <p className="text-sm text-wood leading-relaxed md:text-right">
+                看完還不確定，先把用途和預算傳給香董，讓他直接幫你縮小選項。
+              </p>
+            </div>
+          </div>
+
+          <div className="divide-y divide-gold/20">
+            {beginnerGuides.map((guide) => (
+              <div
+                key={guide.title}
+                className="grid gap-5 py-7 first:pt-0 last:pb-0 lg:grid-cols-[0.9fr_1.35fr] lg:items-start"
+              >
+                <div>
+                  <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
+                    {guide.kicker}
+                  </p>
+                  <h3 className="font-serif text-xl md:text-2xl text-navy mb-3">
+                    {guide.title}
+                  </h3>
+                  <p className="text-sm text-woodLight leading-relaxed">
+                    {guide.text}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="inline-flex rounded-full bg-white px-3 py-1 text-xs text-navy border border-gold/20">
+                      預算 {guide.budget}
+                    </span>
+                    {guide.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="inline-flex rounded-full px-3 py-1 text-xs text-woodLight border border-gold/20"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {guide.products.map((product) => (
+                    <GuideProductLink key={product._id} product={product} />
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -314,12 +425,51 @@ export default function ShopPage() {
   )
 }
 
+function findProductsBySlugs(products: ShopProduct[], slugs: string[]) {
+  return slugs
+    .map((slug) => products.find((product) => product.slug === slug))
+    .filter((product): product is ShopProduct => Boolean(product))
+}
+
 function ShopStat({ value, label }: { value: string; label: string }) {
   return (
     <div className="border-l border-gold/40 pl-3">
       <p className="text-xl md:text-2xl text-navy font-medium leading-tight">{value}</p>
       <p className="text-xs text-woodLight mt-1">{label}</p>
     </div>
+  )
+}
+
+function GuideProductLink({ product }: { product: ShopProduct }) {
+  if (!product.mainImageUrl) return null
+
+  return (
+    <TrackedShopLink
+      href={product.externalUrl}
+      target="_blank"
+      rel="noopener"
+      trackingName={product.name}
+      trackingCategory={product.productType}
+      trackingPrice={product.priceLabel}
+      isCollectible={product.isCollectible}
+      className="group block overflow-hidden rounded-lg border border-gold/20 bg-white hover:border-gold/50"
+    >
+      <div className="relative aspect-square bg-cream">
+        <Image
+          src={product.mainImageUrl}
+          alt={product.name}
+          fill
+          sizes="(min-width: 1024px) 160px, 45vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      </div>
+      <div className="p-3">
+        <p className="text-[13px] text-navy font-medium leading-snug line-clamp-2">
+          {product.name}
+        </p>
+        <p className="mt-1 text-xs text-goldDark">{product.priceLabel}</p>
+      </div>
+    </TrackedShopLink>
   )
 }
 
