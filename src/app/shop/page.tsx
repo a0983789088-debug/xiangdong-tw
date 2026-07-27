@@ -245,7 +245,7 @@ export default function ShopPage() {
         </div>
       </section>
 
-      <section className="bg-cream border-b border-gold/15">
+      <section id="starter-guide" className="bg-cream border-b border-gold/15">
         <div className="container-x py-12 md:py-16">
           <div className="grid gap-4 md:grid-cols-12 md:items-end mb-7">
             <div className="md:col-span-7">
