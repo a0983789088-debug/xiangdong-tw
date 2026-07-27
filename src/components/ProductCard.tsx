@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { urlForImage } from '@/lib/sanity/image'
+import { TrackedShopLink } from './TrackedShopLink'
 
 export type ProductCardData = {
   _id: string
@@ -39,10 +40,14 @@ export function ProductCard({ product }: { product: ProductCardData }) {
     : null
 
   return (
-    <a
+    <TrackedShopLink
       href={productUrl}
       target="_blank"
       rel="noopener"
+      trackingName={product.name}
+      trackingCategory={typeLabel || product.productType}
+      trackingPrice={product.priceLabel}
+      isCollectible={product.isCollectible}
       className={`group block rounded-lg overflow-hidden bg-white transition-colors ${
         product.isCollectible
           ? 'border-2 border-gold shadow-[0_0_0_3px_rgba(201,169,97,0.08)]'
@@ -121,6 +126,6 @@ export function ProductCard({ product }: { product: ProductCardData }) {
           <span>→</span>
         </p>
       </div>
-    </a>
+    </TrackedShopLink>
   )
 }
