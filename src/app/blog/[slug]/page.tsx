@@ -54,6 +54,59 @@ type SeoSalesGuide = {
   }>
 }
 
+type InternalArticleLink = {
+  href: string
+  title: string
+  description: string
+}
+
+const INTERNAL_LINKS_BY_SLUG: Record<string, InternalArticleLink[]> = {
+  'vietnam-indonesia-sandalwood-comparison': [
+    {
+      href: '/blog/vietnam-vs-malaysia-agarwood-difference',
+      title: '越南沉香和馬來西亞沉香差在哪？',
+      description:
+        '如果你正在比較產地，這篇會把越南與馬來西亞沉香的香氣、用途和價格差異講清楚。',
+    },
+  ],
+  'taiwan-vs-vietnam-buying-agarwood': [
+    {
+      href: '/blog/vietnam-vs-malaysia-agarwood-difference',
+      title: '越南沉香和馬來西亞沉香怎麼選？',
+      description:
+        '從買香角度延伸看產地差別，幫你判斷新手該先聞越南料還是馬來西亞料。',
+    },
+  ],
+  'vietnam-aged-agarwood-evaluation': [
+    {
+      href: '/blog/vietnam-vs-malaysia-agarwood-difference',
+      title: '越南料之外，也要懂馬來西亞沉香',
+      description:
+        '同樣是沉香，不同產地的香氣厚度、尾韻與價格結構會不同，這篇用白話比較。',
+    },
+  ],
+  'vietnam-vs-malaysia-agarwood-difference': [
+    {
+      href: '/blog/vietnam-indonesia-sandalwood-comparison',
+      title: '越南、印尼與檀香差在哪？',
+      description:
+        '看完越南與馬來西亞比較後，可以再往外看常見香材產地與香氣差異。',
+    },
+    {
+      href: '/blog/taiwan-vs-vietnam-buying-agarwood',
+      title: '台灣買沉香和越南買沉香差在哪？',
+      description:
+        '如果你在意購買現場、價格透明度與挑貨風險，這篇可以接著看。',
+    },
+    {
+      href: '/blog/vietnam-aged-agarwood-evaluation',
+      title: '越南老料沉香怎麼看？',
+      description:
+        '想更深入看越南沉香的年份、料況與香氣穩定度，可以接著讀這篇。',
+    },
+  ],
+}
+
 /**
  * HowTo 結構化資料 ── 給 Google / AI 看的「步驟教學」標記
  * 只有明確有步驟的教學文才會啟用、其他文章維持原狀。
@@ -288,6 +341,7 @@ export default async function ArticlePage({
   const toc = extractToc(article.body)
   const url = `${SITE_URL}/blog/${slug}`
   const seoSalesGuide = SEO_SALES_GUIDE_BY_SLUG[slug]
+  const internalLinks = INTERNAL_LINKS_BY_SLUG[slug] || []
 
   // 麵包屑
   const breadcrumb = [
@@ -398,6 +452,10 @@ export default async function ArticlePage({
           <div>
             <PortableTextContent value={article.body} />
 
+            {internalLinks.length > 0 && (
+              <InternalArticleLinks links={internalLinks} />
+            )}
+
             {/* Tags */}
             {article.tags?.length > 0 && (
               <div className="mt-10 pt-6 border-t border-gold/20">
@@ -443,6 +501,33 @@ export default async function ArticlePage({
         </div>
       </div>
     </article>
+  )
+}
+
+function InternalArticleLinks({ links }: { links: InternalArticleLink[] }) {
+  return (
+    <section className="mt-10 rounded-lg border border-gold/25 bg-cream/70 p-5">
+      <p className="mb-2 text-xs tracking-[3px] text-goldDark uppercase">
+        延伸閱讀
+      </p>
+      <h2 className="mb-4 font-serif text-2xl text-navy">
+        產地差別可以接著這樣看
+      </h2>
+      <div className="space-y-3">
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="block rounded-md border border-gold/20 bg-white p-4 transition-colors hover:border-gold/60"
+          >
+            <span className="block text-base text-navy">{link.title}</span>
+            <span className="mt-1 block text-sm leading-relaxed text-woodLight">
+              {link.description}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </section>
   )
 }
 

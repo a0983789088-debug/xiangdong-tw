@@ -3,8 +3,10 @@ import { sanityClient } from '@/lib/sanity/client'
 import { ALL_ARTICLE_SLUGS_QUERY } from '@/lib/sanity/queries'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://xiangdong.tw'
+const SITEMAP_REVALIDATE_SECONDS = 300
 
-export const revalidate = 3600 // 每小時重生
+export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
@@ -48,7 +50,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const articles = await sanityClient
     .fetch<Array<{ slug: string; publishedAt: string; _updatedAt: string }>>(
-      ALL_ARTICLE_SLUGS_QUERY
+      ALL_ARTICLE_SLUGS_QUERY,
+      {},
+      {
+        cache: 'force-cache',
+        next: { revalidate: SITEMAP_REVALIDATE_SECONDS },
+      }
     )
     .catch(() => [])
 
