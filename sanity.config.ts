@@ -2,6 +2,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './sanity/schemaTypes'
+import { deleteArticleDraftAction } from './sanity/actions/deleteArticleDraftAction'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '3zcpri8u'
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
@@ -27,6 +28,17 @@ export default defineConfig({
                   .id('articleList')
                   .title('文章')
                   .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }])
+              ),
+            S.listItem()
+              .id('articleDrafts')
+              .title('草稿文章')
+              .child(
+                S.documentTypeList('article')
+                  .id('articleDraftList')
+                  .title('草稿文章')
+                  .filter('_type == "article" && _id in path("drafts.**")')
+                  .apiVersion('2024-11-01')
+                  .defaultOrdering([{ field: '_updatedAt', direction: 'desc' }])
               ),
             S.listItem()
               .id('products')
@@ -66,11 +78,18 @@ export default defineConfig({
   },
   document: {
     // 禁止「複製/刪除」siteSettings
-    actions: (input, context) =>
-      context.schemaType === 'siteSettings'
-        ? input.filter(
-            ({ action }) => action && !['duplicate', 'delete'].includes(action)
-          )
-        : input,
+    actions: (input, context) => {
+      if (context.schemaType === 'siteSettings') {
+        return input.filter(
+          ({ action }) => action && !['duplicate', 'delete'].includes(action)
+        )
+      }
+
+      if (context.schemaType === 'article') {
+        return [...input, deleteArticleDraftAction]
+      }
+
+      return input
+    },
   },
 })
