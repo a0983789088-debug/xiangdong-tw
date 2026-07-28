@@ -137,12 +137,28 @@ export default async function HomePage() {
                 rel="noopener"
                 trackingName="首頁一頁購物商城"
                 trackingType="shop_home"
-                className="col-span-2 flex min-h-24 flex-col justify-between rounded-lg border border-gold/30 bg-cream px-4 py-3 text-navy hover:bg-white"
+                className="col-span-2 flex min-h-24 flex-col justify-between rounded-lg border border-gold/30 bg-cream px-4 py-3 text-navy transition hover:bg-white"
               >
                 <span className="text-xs tracking-[2px] text-goldDark uppercase">
                   Shop
                 </span>
-                <span className="text-sm font-medium leading-snug">
+                <span className="my-4 block">
+                  <span className="block text-lg font-serif leading-snug text-navy">
+                    現貨、價格、規格一次看
+                  </span>
+                  <span className="mt-2 block text-xs leading-relaxed text-woodLight">
+                    線香、香材、手串與日常香品，直接到商城下單。
+                  </span>
+                  <span className="mt-3 flex flex-wrap gap-1.5">
+                    <span className="rounded-full border border-gold/25 px-2 py-0.5 text-[11px] text-goldDark">
+                      商城現貨
+                    </span>
+                    <span className="rounded-full border border-gold/25 px-2 py-0.5 text-[11px] text-goldDark">
+                      可直接購買
+                    </span>
+                  </span>
+                </span>
+                <span className="text-sm font-medium leading-snug text-goldDark">
                   前往一頁購物商城 →
                 </span>
               </TrackedShopLink>
