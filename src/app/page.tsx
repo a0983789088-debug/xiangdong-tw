@@ -65,6 +65,12 @@ type OriginMapData = {
   kicker: string
   title: string
   intro: string
+  imageSrc: string
+  imageAlt: string
+  aspectClassName: string
+  imageClassName?: string
+  sourceLabel: string
+  sourceHref: string
   regions: OriginMapRegion[]
 }
 
@@ -74,41 +80,54 @@ const AGARWOOD_ORIGIN_MAPS: OriginMapData[] = [
     kicker: 'Indonesia Map',
     title: '印尼沉香產區',
     intro: '印尼產區常以島嶼或舊地名出現在市場，例如坤甸、伊利安、馬魯古。先看位置，再回頭看香韻與規格。',
+    imageSrc: '/maps/indonesia-relief-location-map.jpg',
+    imageAlt: '印尼地形地圖',
+    aspectClassName: 'aspect-[120/46]',
+    imageClassName: 'object-cover',
+    sourceLabel: 'Wikimedia Commons / Uwe Dedering，CC BY-SA 3.0',
+    sourceHref: 'https://commons.wikimedia.org/wiki/File:Indonesia_relief_location_map.jpg',
     regions: [
       {
         name: '蘇門答臘',
         area: 'Aceh / Riau / Jambi / Bangka',
         note: '西印尼常見產區帶，市場名稱多，入門先看油線、氣味乾淨度與價格級距。',
-        x: 19,
-        y: 49,
+        x: 16,
+        y: 40,
       },
       {
         name: '坤甸 / 加里曼丹',
         area: 'West Kalimantan',
         note: '香材、粉料常見名稱，適合拿來理解產地名、油脂感與價格差。',
-        x: 41,
-        y: 47,
+        x: 32,
+        y: 38,
       },
       {
         name: '蘇拉威西',
         area: 'Sulawesi',
         note: '島嶼型產區，市場量與批次感差異大，買時更要回到實際香韻。',
         x: 56,
-        y: 51,
+        y: 48,
       },
       {
         name: '馬魯古',
         area: 'Maluku',
         note: '東印尼島群，常和深色、油脂感、野生料印象一起被討論。',
-        x: 69,
-        y: 55,
+        x: 72,
+        y: 53,
+      },
+      {
+        name: '爪哇 / 努沙登加拉',
+        area: 'Java / Nusa Tenggara',
+        note: '長條島鏈也是印尼香材流通會遇到的地理帶，常用來對照島嶼位置。',
+        x: 39,
+        y: 72,
       },
       {
         name: '伊利安 / 巴布亞',
         area: 'Papua / Irian Jaya',
         note: '許多商品會稱伊利安，常出現在粉料、土沉、抽油粉脈絡。',
-        x: 84,
-        y: 57,
+        x: 90,
+        y: 58,
         labelSide: 'left',
       },
     ],
@@ -118,46 +137,58 @@ const AGARWOOD_ORIGIN_MAPS: OriginMapData[] = [
     kicker: 'Vietnam Map',
     title: '越南沉香產區',
     intro: '越南產區多集中在中部到中南部山地與沿海，惠安、芽莊、慶和等名稱常被拿來判斷等級與風格。',
+    imageSrc: '/maps/vietnam-relief-location-map.png',
+    imageAlt: '越南地形地圖',
+    aspectClassName: 'aspect-[3/4]',
+    imageClassName: 'object-contain',
+    sourceLabel: 'Wikimedia Commons / Milenioscuro，CC BY 4.0',
+    sourceHref: 'https://commons.wikimedia.org/wiki/File:Vietnam_relief_location_map.svg',
     regions: [
       {
         name: '長山山脈帶',
         area: 'Nghe An to Phu Quoc',
         note: '越南沉香樹自然分布可從義安往南看，理解大範圍分布後再看重點產區。',
-        x: 43,
-        y: 33,
+        x: 41,
+        y: 29,
       },
       {
         name: '惠安 / 廣南',
         area: 'Quang Nam',
         note: '越南中部經典產區名，新手常把它當成理解越南沉香的起點。',
-        x: 48,
-        y: 49,
+        x: 67,
+        y: 51,
       },
       {
         name: '平定 / 歸仁',
         area: 'Binh Dinh / Quy Nhon',
         note: '位在中部沿海，常與廣南、富安、慶和一起被列入高品質沉香研究範圍。',
-        x: 55,
-        y: 60,
+        x: 75,
+        y: 64,
       },
       {
         name: '富安',
         area: 'Phu Yen',
         note: '中南部產區，放在平定與慶和之間看，產區脈絡更清楚。',
-        x: 59,
+        x: 76,
         y: 68,
+        labelSide: 'left',
       },
       {
         name: '慶和 / 芽莊',
         area: 'Khanh Hoa / Nha Trang',
         note: '越南最具代表性的產區之一，奇楠與高品質沉香常拿這裡當對照。',
-        x: 64,
-        y: 76,
+        x: 75,
+        y: 73,
         labelSide: 'left',
       },
     ],
   },
 ]
+
+const AGARWOOD_ORIGIN_REGION_COUNT = AGARWOOD_ORIGIN_MAPS.reduce(
+  (total, map) => total + map.regions.length,
+  0,
+)
 
 export default async function HomePage() {
   const [articles, products, settings] = await Promise.all([
@@ -428,14 +459,16 @@ export default async function HomePage() {
                   <p className="text-xs text-woodLight mt-1">張產區地圖</p>
                 </div>
                 <div className="border-l border-gold/35 pl-3">
-                  <p className="text-2xl text-navy leading-tight">10</p>
+                  <p className="text-2xl text-navy leading-tight">
+                    {AGARWOOD_ORIGIN_REGION_COUNT}
+                  </p>
                   <p className="text-xs text-woodLight mt-1">個常見產區點位</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+          <div className="mt-8 grid items-start gap-5 lg:grid-cols-2">
             {AGARWOOD_ORIGIN_MAPS.map((map) => (
               <OriginMapCard key={map.country} map={map} />
             ))}
@@ -759,15 +792,33 @@ function OriginMapCard({ map }: { map: OriginMapData }) {
       </div>
       <p className="mt-3 text-sm leading-relaxed text-woodLight">{map.intro}</p>
 
-      <div className="relative mt-5 aspect-[5/3] overflow-hidden rounded-lg border border-gold/20 bg-[#ECF3F1]">
-        <div className="absolute inset-0 bg-[linear-gradient(165deg,rgba(255,255,255,0.7)_0%,rgba(236,243,241,0.35)_45%,rgba(201,169,97,0.14)_100%)]" />
-        <div className="absolute inset-x-5 top-1/2 h-px bg-white/70" />
-        <div className="absolute inset-y-5 left-1/2 w-px bg-white/70" />
-        <OriginMapSilhouette country={map.country} />
+      <div
+        className={`relative mt-5 overflow-hidden rounded-lg border border-gold/20 bg-[#DCEEF7] ${map.aspectClassName}`}
+      >
+        <Image
+          src={map.imageSrc}
+          alt={map.imageAlt}
+          fill
+          sizes="(min-width: 1024px) 520px, 100vw"
+          className={map.imageClassName}
+        />
+        <div className="absolute inset-0 bg-white/5" />
         {map.regions.map((region) => (
           <OriginMapPin key={`${map.country}-${region.name}`} region={region} />
         ))}
       </div>
+      <p className="mt-2 text-[11px] leading-relaxed text-woodLight/75">
+        底圖來源：
+        <a
+          href={map.sourceHref}
+          target="_blank"
+          rel="noopener"
+          className="text-goldDark underline underline-offset-2"
+        >
+          {map.sourceLabel}
+        </a>
+        ，香董加註產區標示。
+      </p>
 
       <div className="mt-5 divide-y divide-gold/20">
         {map.regions.map((region) => (
@@ -793,38 +844,11 @@ function OriginMapCard({ map }: { map: OriginMapData }) {
   )
 }
 
-function OriginMapSilhouette({ country }: { country: OriginMapCountry }) {
-  if (country === 'indonesia') {
-    return (
-      <div aria-hidden="true" className="absolute inset-0">
-        <span className="absolute left-[9%] top-[45%] h-[15%] w-[28%] -rotate-[16deg] rounded-[60%] border border-navy/10 bg-navy/12" />
-        <span className="absolute left-[27%] top-[63%] h-[7%] w-[25%] -rotate-[3deg] rounded-[60%] border border-navy/10 bg-navy/12" />
-        <span className="absolute left-[32%] top-[35%] h-[28%] w-[22%] rotate-[8deg] rounded-[45%_55%_50%_40%] border border-navy/10 bg-navy/12" />
-        <span className="absolute left-[53%] top-[41%] h-[23%] w-[12%] rotate-[22deg] rounded-[60%_35%_60%_35%] border border-navy/10 bg-navy/12" />
-        <span className="absolute left-[59%] top-[50%] h-[16%] w-[10%] -rotate-[30deg] rounded-[60%] border border-navy/10 bg-navy/12" />
-        <span className="absolute left-[69%] top-[47%] h-[5%] w-[5%] rounded-full border border-navy/10 bg-navy/12" />
-        <span className="absolute left-[72%] top-[57%] h-[4%] w-[4%] rounded-full border border-navy/10 bg-navy/12" />
-        <span className="absolute left-[77%] top-[44%] h-[23%] w-[19%] rotate-[4deg] rounded-[35%_60%_45%_55%] border border-navy/10 bg-navy/12" />
-      </div>
-    )
-  }
-
-  return (
-    <div aria-hidden="true" className="absolute inset-0">
-      <span className="absolute left-[35%] top-[12%] h-[19%] w-[24%] -rotate-[12deg] rounded-[55%_45%_50%_55%] border border-navy/10 bg-navy/12" />
-      <span className="absolute left-[46%] top-[27%] h-[34%] w-[8%] rotate-[8deg] rounded-full border border-navy/10 bg-navy/12" />
-      <span className="absolute left-[50%] top-[48%] h-[26%] w-[9%] -rotate-[15deg] rounded-full border border-navy/10 bg-navy/12" />
-      <span className="absolute left-[57%] top-[66%] h-[21%] w-[18%] rotate-[20deg] rounded-[50%_35%_55%_45%] border border-navy/10 bg-navy/12" />
-      <span className="absolute left-[49%] top-[84%] h-[8%] w-[17%] -rotate-[12deg] rounded-full border border-navy/10 bg-navy/12" />
-    </div>
-  )
-}
-
 function OriginMapPin({ region }: { region: OriginMapRegion }) {
   const labelClassName =
     region.labelSide === 'left'
-      ? 'absolute right-4 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded bg-white/95 px-2 py-0.5 text-[11px] text-navy shadow-sm sm:block'
-      : 'absolute left-4 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded bg-white/95 px-2 py-0.5 text-[11px] text-navy shadow-sm sm:block'
+      ? 'absolute right-4 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded bg-red-600/95 px-2 py-0.5 text-[11px] font-medium text-white shadow sm:block'
+      : 'absolute left-4 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded bg-red-600/95 px-2 py-0.5 text-[11px] font-medium text-white shadow sm:block'
 
   return (
     <div
@@ -832,8 +856,8 @@ function OriginMapPin({ region }: { region: OriginMapRegion }) {
       style={{ left: `${region.x}%`, top: `${region.y}%` }}
     >
       <span className="relative flex h-3.5 w-3.5 items-center justify-center">
-        <span className="absolute h-3.5 w-3.5 rounded-full bg-gold/35" />
-        <span className="relative h-2 w-2 rounded-full border border-white bg-goldDark shadow" />
+        <span className="absolute h-3.5 w-3.5 rounded-full bg-red-500/35" />
+        <span className="relative h-2 w-2 rounded-full border border-white bg-red-600 shadow" />
       </span>
       <span className={labelClassName}>{region.name}</span>
     </div>
