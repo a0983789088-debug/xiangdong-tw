@@ -49,147 +49,6 @@ const HOME_ENTRY_ROUTES = [
   },
 ]
 
-type OriginMapCountry = 'indonesia' | 'vietnam'
-
-type OriginMapRegion = {
-  name: string
-  area: string
-  note: string
-  x: number
-  y: number
-  labelSide?: 'left' | 'right'
-}
-
-type OriginMapData = {
-  country: OriginMapCountry
-  kicker: string
-  title: string
-  intro: string
-  imageSrc: string
-  imageAlt: string
-  aspectClassName: string
-  imageClassName?: string
-  sourceLabel: string
-  sourceHref: string
-  regions: OriginMapRegion[]
-}
-
-const AGARWOOD_ORIGIN_MAPS: OriginMapData[] = [
-  {
-    country: 'indonesia',
-    kicker: 'Indonesia Map',
-    title: '印尼沉香產區',
-    intro: '印尼產區常以島嶼或舊地名出現在市場，例如坤甸、伊利安、馬魯古。先看位置，再回頭看香韻與規格。',
-    imageSrc: '/maps/indonesia-relief-location-map.jpg',
-    imageAlt: '印尼地形地圖',
-    aspectClassName: 'aspect-[120/46]',
-    imageClassName: 'object-cover',
-    sourceLabel: 'Wikimedia Commons / Uwe Dedering，CC BY-SA 3.0',
-    sourceHref: 'https://commons.wikimedia.org/wiki/File:Indonesia_relief_location_map.jpg',
-    regions: [
-      {
-        name: '蘇門答臘',
-        area: 'Aceh / Riau / Jambi / Bangka',
-        note: '西印尼常見產區帶，市場名稱多，入門先看油線、氣味乾淨度與價格級距。',
-        x: 16,
-        y: 40,
-      },
-      {
-        name: '坤甸 / 加里曼丹',
-        area: 'West Kalimantan',
-        note: '香材、粉料常見名稱，適合拿來理解產地名、油脂感與價格差。',
-        x: 32,
-        y: 38,
-      },
-      {
-        name: '蘇拉威西',
-        area: 'Sulawesi',
-        note: '島嶼型產區，市場量與批次感差異大，買時更要回到實際香韻。',
-        x: 56,
-        y: 48,
-      },
-      {
-        name: '馬魯古',
-        area: 'Maluku',
-        note: '東印尼島群，常和深色、油脂感、野生料印象一起被討論。',
-        x: 72,
-        y: 53,
-      },
-      {
-        name: '爪哇 / 努沙登加拉',
-        area: 'Java / Nusa Tenggara',
-        note: '長條島鏈也是印尼香材流通會遇到的地理帶，常用來對照島嶼位置。',
-        x: 39,
-        y: 72,
-      },
-      {
-        name: '伊利安 / 巴布亞',
-        area: 'Papua / Irian Jaya',
-        note: '許多商品會稱伊利安，常出現在粉料、土沉、抽油粉脈絡。',
-        x: 90,
-        y: 58,
-        labelSide: 'left',
-      },
-    ],
-  },
-  {
-    country: 'vietnam',
-    kicker: 'Vietnam Map',
-    title: '越南沉香產區',
-    intro: '越南產區多集中在中部到中南部山地與沿海，惠安、芽莊、慶和等名稱常被拿來判斷等級與風格。',
-    imageSrc: '/maps/vietnam-relief-location-map.png',
-    imageAlt: '越南地形地圖',
-    aspectClassName: 'aspect-[3/4]',
-    imageClassName: 'object-contain',
-    sourceLabel: 'Wikimedia Commons / Milenioscuro，CC BY 4.0',
-    sourceHref: 'https://commons.wikimedia.org/wiki/File:Vietnam_relief_location_map.svg',
-    regions: [
-      {
-        name: '長山山脈帶',
-        area: 'Nghe An to Phu Quoc',
-        note: '越南沉香樹自然分布可從義安往南看，理解大範圍分布後再看重點產區。',
-        x: 41,
-        y: 29,
-      },
-      {
-        name: '惠安 / 廣南',
-        area: 'Quang Nam',
-        note: '越南中部經典產區名，新手常把它當成理解越南沉香的起點。',
-        x: 67,
-        y: 51,
-      },
-      {
-        name: '平定 / 歸仁',
-        area: 'Binh Dinh / Quy Nhon',
-        note: '位在中部沿海，常與廣南、富安、慶和一起被列入高品質沉香研究範圍。',
-        x: 75,
-        y: 64,
-      },
-      {
-        name: '富安',
-        area: 'Phu Yen',
-        note: '中南部產區，放在平定與慶和之間看，產區脈絡更清楚。',
-        x: 76,
-        y: 68,
-        labelSide: 'left',
-      },
-      {
-        name: '慶和 / 芽莊',
-        area: 'Khanh Hoa / Nha Trang',
-        note: '越南最具代表性的產區之一，奇楠與高品質沉香常拿這裡當對照。',
-        x: 75,
-        y: 73,
-        labelSide: 'left',
-      },
-    ],
-  },
-]
-
-const AGARWOOD_ORIGIN_REGION_COUNT = AGARWOOD_ORIGIN_MAPS.reduce(
-  (total, map) => total + map.regions.length,
-  0,
-)
-
 export default async function HomePage() {
   const [articles, products, settings] = await Promise.all([
     sanityClient.fetch<ArticleCardData[]>(HOME_ARTICLES_QUERY).catch(() => []),
@@ -358,8 +217,17 @@ export default async function HomePage() {
       </section>
 
       {/* ===== 選香路線 ===== */}
-      <section className="bg-cream border-b border-gold/15">
-        <div className="container-x py-14 md:py-16">
+      <section className="relative overflow-hidden bg-cream border-b border-gold/15">
+        <Image
+          src="/maps/world-map-geographical-1920.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="pointer-events-none object-cover opacity-[0.28] mix-blend-multiply"
+        />
+        <div className="absolute inset-0 bg-cream/78" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-cream to-transparent" />
+        <div className="container-x relative py-14 md:py-16">
           <div className="grid gap-8 md:grid-cols-12 md:items-start">
             <div className="md:col-span-4">
               <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
@@ -395,7 +263,7 @@ export default async function HomePage() {
               ].map((route, index) => {
                 const isExternal = route.href.startsWith('https://')
                 const className =
-                  'group flex min-h-[13rem] flex-col justify-between rounded-lg border border-gold/20 bg-white p-5 transition-colors hover:border-gold/60'
+                  'group flex min-h-[13rem] flex-col justify-between rounded-lg border border-gold/25 bg-white/88 p-5 shadow-sm backdrop-blur-[2px] transition-colors hover:border-gold/65 hover:bg-white'
                 const content = (
                   <>
                     <div>
@@ -433,50 +301,6 @@ export default async function HomePage() {
               })}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ===== 沉香產區地圖 ===== */}
-      <section id="origin-map" className="bg-white border-b border-gold/15">
-        <div className="container-x py-14 md:py-16">
-          <div className="grid gap-6 md:grid-cols-12 md:items-end">
-            <div className="md:col-span-7">
-              <p className="text-xs tracking-[3px] text-goldDark uppercase mb-3">
-                Origin Map · 產區導覽
-              </p>
-              <h2 className="font-serif text-2xl md:text-3xl text-navy leading-snug mb-4">
-                把產地名放回地圖上，才知道自己在看什麼
-              </h2>
-              <p className="text-sm text-woodLight leading-relaxed max-w-2xl">
-                很多人第一次聽到坤甸、伊利安、芽莊、惠安，只知道名字很厲害，
-                卻不知道它們分別在哪裡。這裡先用印尼、越南兩張地圖，把常見沉香產區整理出來。
-              </p>
-            </div>
-            <div className="md:col-span-5">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="border-l border-gold/35 pl-3">
-                  <p className="text-2xl text-navy leading-tight">2</p>
-                  <p className="text-xs text-woodLight mt-1">張產區地圖</p>
-                </div>
-                <div className="border-l border-gold/35 pl-3">
-                  <p className="text-2xl text-navy leading-tight">
-                    {AGARWOOD_ORIGIN_REGION_COUNT}
-                  </p>
-                  <p className="text-xs text-woodLight mt-1">個常見產區點位</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 grid items-start gap-5 lg:grid-cols-2">
-            {AGARWOOD_ORIGIN_MAPS.map((map) => (
-              <OriginMapCard key={map.country} map={map} />
-            ))}
-          </div>
-
-          <p className="mt-5 rounded-lg border border-gold/20 bg-cream px-4 py-3 text-xs leading-relaxed text-woodLight">
-            小提醒：地圖是產區導覽示意，不是品質保證。真正要判斷一件香材，還是要回到香韻、油線、結香狀態、燃燒表現與價格是否合理。
-          </p>
         </div>
       </section>
 
@@ -773,94 +597,6 @@ export default async function HomePage() {
         </div>
       </section>
     </>
-  )
-}
-
-function OriginMapCard({ map }: { map: OriginMapData }) {
-  return (
-    <div className="rounded-lg border border-gold/20 bg-cream/75 p-5 md:p-6">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
-            {map.kicker}
-          </p>
-          <h3 className="font-serif text-2xl text-navy">{map.title}</h3>
-        </div>
-        <span className="self-start rounded-full border border-gold/30 bg-white px-3 py-1 text-xs text-goldDark">
-          {map.regions.length} 個點位
-        </span>
-      </div>
-      <p className="mt-3 text-sm leading-relaxed text-woodLight">{map.intro}</p>
-
-      <div
-        className={`relative mt-5 overflow-hidden rounded-lg border border-gold/20 bg-[#DCEEF7] ${map.aspectClassName}`}
-      >
-        <Image
-          src={map.imageSrc}
-          alt={map.imageAlt}
-          fill
-          sizes="(min-width: 1024px) 520px, 100vw"
-          className={map.imageClassName}
-        />
-        <div className="absolute inset-0 bg-white/5" />
-        {map.regions.map((region) => (
-          <OriginMapPin key={`${map.country}-${region.name}`} region={region} />
-        ))}
-      </div>
-      <p className="mt-2 text-[11px] leading-relaxed text-woodLight/75">
-        底圖來源：
-        <a
-          href={map.sourceHref}
-          target="_blank"
-          rel="noopener"
-          className="text-goldDark underline underline-offset-2"
-        >
-          {map.sourceLabel}
-        </a>
-        ，香董加註產區標示。
-      </p>
-
-      <div className="mt-5 divide-y divide-gold/20">
-        {map.regions.map((region) => (
-          <div
-            key={`${map.country}-note-${region.name}`}
-            className="grid gap-1 py-3 first:pt-0 last:pb-0 sm:grid-cols-[8rem_1fr]"
-          >
-            <div>
-              <p className="text-sm font-medium text-navy leading-snug">
-                {region.name}
-              </p>
-              <p className="mt-0.5 text-[11px] text-goldDark leading-snug">
-                {region.area}
-              </p>
-            </div>
-            <p className="text-sm leading-relaxed text-woodLight">
-              {region.note}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function OriginMapPin({ region }: { region: OriginMapRegion }) {
-  const labelClassName =
-    region.labelSide === 'left'
-      ? 'absolute right-4 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded bg-red-600/95 px-2 py-0.5 text-[11px] font-medium text-white shadow sm:block'
-      : 'absolute left-4 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded bg-red-600/95 px-2 py-0.5 text-[11px] font-medium text-white shadow sm:block'
-
-  return (
-    <div
-      className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
-      style={{ left: `${region.x}%`, top: `${region.y}%` }}
-    >
-      <span className="relative flex h-3.5 w-3.5 items-center justify-center">
-        <span className="absolute h-3.5 w-3.5 rounded-full bg-red-500/35" />
-        <span className="relative h-2 w-2 rounded-full border border-white bg-red-600 shadow" />
-      </span>
-      <span className={labelClassName}>{region.name}</span>
-    </div>
   )
 }
 
