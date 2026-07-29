@@ -49,6 +49,48 @@ const HOME_ENTRY_ROUTES = [
   },
 ]
 
+const HOME_BRAND_METRICS = [
+  {
+    value: '十幾年',
+    shortLabel: '買賣開料',
+    label: '沉香買賣、開料與現場挑料經驗',
+  },
+  {
+    value: '真料',
+    shortLabel: '說得清楚',
+    label: '原料、香粉、線香與佛珠都說得清楚',
+  },
+  {
+    value: '先問',
+    shortLabel: '用途預算',
+    label: '用途、預算、送禮需求先確認',
+  },
+  {
+    value: '現貨',
+    shortLabel: '規格庫存',
+    label: '商城同步價格、規格與庫存',
+  },
+]
+
+const HOME_TRUST_POINTS = [
+  {
+    title: '不靠玄學',
+    body: '沉香好不好，先看料、香韻、用途與價格，不用神話包裝。',
+  },
+  {
+    title: '原料看得見',
+    body: '香粉、香材、線香與成品都能回到原料邏輯，讓你知道錢花在哪。',
+  },
+  {
+    title: '新手也能懂',
+    body: '把產地、沉水、油線、黏粉比例這些難懂問題，用買香會遇到的情境講清楚。',
+  },
+  {
+    title: '買之前可先聊',
+    body: '不確定用途或預算，先透過 LINE 詢問，再決定要不要買。',
+  },
+]
+
 export default async function HomePage() {
   const [articles, products, settings] = await Promise.all([
     sanityClient.fetch<ArticleCardData[]>(HOME_ARTICLES_QUERY).catch(() => []),
@@ -62,6 +104,7 @@ export default async function HomePage() {
   const heroProducts = HOME_HERO_PRODUCT_SLUGS
     .map((slug) => MY_SHOP_PRODUCTS.find((product) => product.slug === slug))
     .filter((product): product is (typeof MY_SHOP_PRODUCTS)[number] => Boolean(product))
+  const heroBackgroundProduct = heroProducts[0]
   const articlesWithReading = articles.map((article) => ({
     ...article,
     readingMinutes: estimateReadingMinutes((article as any).body),
@@ -75,114 +118,146 @@ export default async function HomePage() {
       {faq.length > 0 && <JsonLd data={buildFaqJsonLd(faq)} />}
 
       {/* ===== Hero ===== */}
-      <section className="relative overflow-hidden bg-navy text-cream">
-        <div className="absolute inset-0 bg-[linear-gradient(115deg,#081B33_0%,#0B2545_54%,#3D2E1F_100%)]" />
+      <section className="relative overflow-hidden bg-wood text-cream">
+        {heroBackgroundProduct?.mainImageUrl && (
+          <Image
+            src={heroBackgroundProduct.mainImageUrl}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-45"
+          />
+        )}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,27,51,0.96)_0%,rgba(11,37,69,0.82)_48%,rgba(61,46,31,0.38)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-wood/85 to-transparent" />
         <div className="container-x relative py-14 md:py-16 lg:py-20">
-          <div className="grid gap-9 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-            <div>
-              <p className="text-xs tracking-[3px] text-gold uppercase mb-4">
-                天然沉香 · 線香 · 香材原料
-              </p>
-              <h1 className="font-serif text-3xl md:text-5xl text-cream leading-tight tracking-wide mb-5">
-                天然沉香、線香與香材，<br />
-                新手也買得懂。
-              </h1>
-              <p className="max-w-xl text-base md:text-lg text-cream/86 leading-relaxed mb-7">
-                香董把產地、用途、價格差異講清楚。想每天點香、自己製香、送禮收藏，
-                都先有路線，再去看現貨。
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 mb-4">
-                <Link
-                  href="/shop#starter-guide"
-                  className="inline-flex items-center justify-center gap-2 bg-gold text-navy px-5 py-3 rounded-md font-medium hover:opacity-90 transition"
-                >
-                  第一次買香怎麼選 →
-                </Link>
-                <Link
-                  href="/shop#products"
-                  className="inline-flex items-center justify-center gap-2 border border-cream/55 text-cream px-5 py-3 rounded-md font-medium hover:bg-cream hover:text-navy transition"
-                >
-                  直接看商城現貨 →
-                </Link>
-                <Link
-                  href="/line"
-                  className="inline-flex items-center justify-center gap-2 bg-lineGreen text-white px-5 py-3 rounded-md font-medium hover:opacity-90 transition"
-                >
-                  加 LINE 先問
-                </Link>
-              </div>
-              <p className="text-xs text-cream/72 leading-relaxed">
-                不靠神話、不靠話術，先讓你知道這款香適合誰、怎麼用、值不值得。
-              </p>
-            </div>
-
-            <div className="grid grid-cols-5 gap-3 md:gap-4">
-              {heroProducts[0] && (
-                <HomeHeroProductTile
-                  product={heroProducts[0]}
-                  className="col-span-3 row-span-2 aspect-[4/5]"
-                  priority
-                />
-              )}
-              {heroProducts.slice(1).map((product) => (
-                <HomeHeroProductTile
-                  key={product._id}
-                  product={product}
-                  className="col-span-2 aspect-square"
-                />
-              ))}
+          <div className="min-w-0 max-w-3xl">
+            <p className="mb-4 text-xs tracking-[3px] text-gold uppercase">
+              Xiangdong Agarwood House
+            </p>
+            <h1 className="mb-5 font-serif text-3xl leading-tight text-cream [overflow-wrap:anywhere] sm:text-4xl md:text-6xl">
+              十幾年沉香買賣經驗，<br />
+              帶你看懂真正的
+              <br className="sm:hidden" />
+              天然好香。
+            </h1>
+            <p className="mb-7 max-w-2xl text-sm leading-relaxed text-cream/86 [overflow-wrap:anywhere] md:text-lg">
+              香董把沉香、線香、香粉原料和佛珠選品整理成你看得懂的路線。
+              不講玄，不硬推，先讓你知道香氣、用途、價格差在哪。
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/shop#starter-guide"
+                className="inline-flex items-center justify-center rounded-md bg-gold px-5 py-3 font-medium text-navy transition hover:bg-cream"
+              >
+                第一次買香怎麼選 →
+              </Link>
               <TrackedShopLink
                 href={SHOP_URL}
                 target="_blank"
                 rel="noopener"
-                trackingName="首頁一頁購物商城"
+                trackingName="首頁主視覺商城"
                 trackingType="shop_home"
-                className="col-span-2 flex min-h-24 flex-col justify-between rounded-lg border border-gold/30 bg-cream px-4 py-3 text-navy transition hover:bg-white"
+                className="inline-flex items-center justify-center rounded-md border border-cream/55 px-5 py-3 font-medium text-cream transition hover:bg-cream hover:text-navy"
               >
-                <span className="text-xs tracking-[2px] text-goldDark uppercase">
-                  Shop
-                </span>
-                <span className="my-4 block">
-                  <span className="block text-lg font-serif leading-snug text-navy">
-                    現貨、價格、規格一次看
-                  </span>
-                  <span className="mt-2 block text-xs leading-relaxed text-woodLight">
-                    線香、香材、手串與日常香品，直接到商城下單。
-                  </span>
-                  <span className="mt-3 flex flex-wrap gap-1.5">
-                    <span className="rounded-full border border-gold/25 px-2 py-0.5 text-[11px] text-goldDark">
-                      商城現貨
-                    </span>
-                    <span className="rounded-full border border-gold/25 px-2 py-0.5 text-[11px] text-goldDark">
-                      可直接購買
-                    </span>
-                  </span>
-                </span>
-                <span className="text-sm font-medium leading-snug text-goldDark">
-                  前往一頁購物商城 →
-                </span>
+                看商城現貨 →
               </TrackedShopLink>
+              <Link
+                href="/line"
+                className="inline-flex items-center justify-center rounded-md bg-lineGreen px-5 py-3 font-medium text-white transition hover:opacity-90"
+              >
+                加 LINE 先問
+              </Link>
             </div>
+            <p className="mt-4 max-w-xl text-xs leading-relaxed text-cream/72">
+              從原料、香韻、燃燒表現到價格邏輯，讓你買香之前先建立判斷。
+            </p>
           </div>
 
-          <div className="mt-10 grid gap-3 md:grid-cols-3">
-            {HOME_ENTRY_ROUTES.map((route) => (
-              <Link
-                key={route.href}
-                href={route.href}
-                className="group block rounded-lg border border-cream/18 bg-cream/8 p-4 transition-colors hover:bg-cream hover:text-navy"
+          <div className="mt-10 grid grid-cols-2 gap-2 sm:mt-12 sm:gap-3 lg:grid-cols-4">
+            {HOME_BRAND_METRICS.map((metric) => (
+              <div
+                key={metric.value}
+                className="min-w-0 rounded-lg border border-cream/20 bg-cream/10 p-3 backdrop-blur-sm md:p-4"
               >
-                <h2 className="font-sans text-base text-cream group-hover:text-navy font-medium mb-2">
-                  {route.title}
-                </h2>
-                <p className="text-sm text-cream/72 group-hover:text-woodLight leading-relaxed mb-3">
-                  {route.text}
+                <p className="mb-2 font-serif text-xl text-gold md:text-2xl">
+                  {metric.value}
                 </p>
-                <p className="text-xs text-gold group-hover:text-goldDark">
-                  {route.action} →
+                <p className="text-xs leading-relaxed text-cream/78 md:hidden">
+                  {metric.shortLabel}
                 </p>
-              </Link>
+                <p className="hidden text-sm leading-relaxed text-cream/78 md:block">
+                  {metric.label}
+                </p>
+              </div>
             ))}
+          </div>
+
+          <div className="mt-6 hidden gap-3 md:grid md:grid-cols-4">
+            {heroProducts.slice(0, 3).map((product, index) => (
+              <HomeHeroProductTile
+                key={product._id}
+                product={product}
+                className="aspect-[4/3]"
+                priority={index === 0}
+              />
+            ))}
+            <TrackedShopLink
+              href={SHOP_URL}
+              target="_blank"
+              rel="noopener"
+              trackingName="首頁一頁購物商城"
+              trackingType="shop_home"
+              className="flex min-h-36 flex-col justify-between rounded-lg border border-gold/35 bg-cream p-4 text-navy transition hover:bg-white"
+            >
+              <span className="text-xs tracking-[2px] text-goldDark uppercase">
+                Shop
+              </span>
+              <span className="block">
+                <span className="block font-serif text-xl leading-snug text-navy">
+                  現貨、價格、規格一次看
+                </span>
+                <span className="mt-2 block text-xs leading-relaxed text-woodLight">
+                  線香、香材、手串與日常香品，直接到商城下單。
+                </span>
+              </span>
+              <span className="text-sm font-medium leading-snug text-goldDark">
+                前往一頁購物商城 →
+              </span>
+            </TrackedShopLink>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 品牌信任背書 ===== */}
+      <section className="bg-white border-b border-gold/15">
+        <div className="container-x py-12 md:py-14">
+          <div className="grid gap-8 md:grid-cols-12 md:items-start">
+            <div className="md:col-span-4">
+              <p className="mb-3 text-xs tracking-[3px] text-goldDark uppercase">
+                Why Xiangdong
+              </p>
+              <h2 className="mb-4 font-serif text-2xl leading-snug text-navy md:text-3xl">
+                有質感，不是把網站做滿。是把你在意的問題先講清楚。
+              </h2>
+              <p className="text-sm leading-relaxed text-woodLight">
+                香董的首頁要讓人一進來就知道：這不是只會賣香的頁面，而是有人真的懂料、懂用途，也願意把判斷方式講出來。
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 md:col-span-8">
+              {HOME_TRUST_POINTS.map((item) => (
+                <article
+                  key={item.title}
+                  className="rounded-lg border border-gold/20 bg-cream p-5"
+                >
+                  <h3 className="mb-2 text-lg text-navy">{item.title}</h3>
+                  <p className="text-sm leading-relaxed text-woodLight">
+                    {item.body}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -196,34 +271,24 @@ export default async function HomePage() {
                 第一次來香董
               </p>
               <h2 className="font-serif text-2xl text-navy leading-snug">
-                先把三個最容易踩雷的問題搞懂
+                先選你現在最需要的路線
               </h2>
             </div>
             <div className="md:col-span-8 grid gap-3 sm:grid-cols-3">
-              {[
-                {
-                  label: '沉香價格怎麼看才合理？',
-                  href: '/blog/why-agarwood-prices-vary-so-much',
-                },
-                {
-                  label: '沉香會沉水就比較貴嗎？',
-                  href: '/blog/agarwood-sinking-water-value',
-                },
-                {
-                  label: '線香推薦先看什麼？',
-                  href: '/blog/agarwood-incense-binder-ratio-explained',
-                },
-              ].map((item) => (
+              {HOME_ENTRY_ROUTES.map((route) => (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  key={route.href}
+                  href={route.href}
                   className="group flex min-h-24 flex-col justify-between rounded-lg border border-gold/20 bg-cream px-4 py-4 transition-colors hover:border-gold/60 hover:bg-white"
                 >
                   <span className="text-sm font-medium leading-snug text-navy">
-                    {item.label}
+                    {route.title}
+                  </span>
+                  <span className="mt-2 text-xs leading-relaxed text-woodLight">
+                    {route.text}
                   </span>
                   <span className="mt-3 text-xs text-goldDark group-hover:text-navy">
-                    讀香董實戰說法 →
+                    {route.action} →
                   </span>
                 </Link>
               ))}
@@ -653,11 +718,18 @@ function HomeHeroProductTile({
         fill
         sizes="(min-width: 1024px) 320px, 45vw"
         priority={priority}
-        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        className="object-cover object-bottom transition-transform duration-500 group-hover:scale-[1.03]"
       />
-      <span className="absolute left-2.5 top-2.5 rounded bg-white/90 px-2 py-0.5 text-[10.5px] text-navy">
-        {product.priceLabel}
-      </span>
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/92 via-navy/55 to-transparent p-3 text-cream">
+        <span className="line-clamp-2 block text-sm font-medium leading-tight">
+          {product.name}
+        </span>
+        {product.priceLabel && (
+          <span className="mt-1 block text-[11px] text-gold">
+            {product.priceLabel}
+          </span>
+        )}
+      </div>
     </TrackedShopLink>
   )
 }

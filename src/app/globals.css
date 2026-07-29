@@ -38,6 +38,7 @@ h1, h2, h3, h4 {
 
 /* Container */
 .container-x {
+  box-sizing: border-box;
   width: 100%;
   max-width: 72rem;
   margin-left: auto;

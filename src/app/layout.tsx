@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { Suspense } from 'react'
 import { Noto_Sans_TC, Noto_Serif_TC } from 'next/font/google'
@@ -35,6 +35,11 @@ const DEFAULT_DESCRIPTION =
   '香董，台灣沉香買賣商，做這行十幾年。沉香真假辨識、沉香價格、產地差別、天然線香推薦、佛珠選擇，用實戰經驗一篇篇講清楚。'
 const CLARITY_PROJECT_ID = 'x5x1pa18i4'
 const GA_MEASUREMENT_ID = 'G-6LDJXZ6EH5'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityClient.fetch<any>(SITE_SETTINGS_QUERY).catch(() => null)
