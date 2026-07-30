@@ -87,7 +87,7 @@ export default function LineLandingPage() {
         <div className="mt-12 pt-10 border-t border-gold/20">
           <h2 className="font-serif text-xl text-navy mb-4">不想加 LINE？</h2>
           <p className="text-sm text-wood leading-relaxed mb-4">
-            那也可以加入 4,488 位香友的 FB 社團「香董職人老實說｜沉香知識 × 香友交流」、
+            那也可以加入全台將近 5000 位香友的 FB 社團「香董職人老實說｜沉香知識 × 香友交流」、
             或直接到 FB 競標社團看每週直播。
           </p>
           <div className="space-y-2">

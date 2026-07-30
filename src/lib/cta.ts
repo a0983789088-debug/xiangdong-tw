@@ -39,7 +39,7 @@ export const CTA_PRESETS: Record<CtaType, CtaItem> = {
   fbKnowledge: {
     type: 'fbKnowledge',
     title: '加入「香董職人老實說」社團',
-    description: '4,488 位香友交流沉香專業知識',
+    description: '4,886 位香友交流沉香專業知識',
     url: 'https://www.facebook.com/groups/260642251054970',
   },
   shop: {
@@ -52,7 +52,10 @@ export const CTA_PRESETS: Record<CtaType, CtaItem> = {
 
 export function normalizeCtaItem(cta: CtaItem): CtaItem {
   if (cta.type === 'shop') return CTA_PRESETS.shop
-  return cta
+  return {
+    ...cta,
+    description: cta.description?.replace('4,488', '4,886'),
+  }
 }
 
 export function normalizeSiteCtas(ctas: CtaItem[] | null | undefined) {

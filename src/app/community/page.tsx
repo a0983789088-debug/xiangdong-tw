@@ -69,7 +69,7 @@ export default function CommunityPage() {
 
         <div className="pt-10 border-t border-gold/20">
           <p className="text-sm text-woodLight mb-4">
-            想看深度沉香知識交流？另一個 4,488 人的學習社團也歡迎加入：
+            想看深度沉香知識交流？另一個 4,886 人的學習社團也歡迎加入：
           </p>
           <a
             href={CTA_PRESETS.fbKnowledge.url}

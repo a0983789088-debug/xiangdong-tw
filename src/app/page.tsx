@@ -15,6 +15,7 @@ import { FaqSection } from '@/components/FaqSection'
 import { JsonLd, buildFaqJsonLd } from '@/components/JsonLd'
 import { TrackedShopLink } from '@/components/TrackedShopLink'
 import { estimateReadingMinutes } from '@/lib/readingTime'
+import { getMyShopProducts } from '@/lib/myShopFeed'
 import { MY_SHOP_PRODUCTS } from '@/lib/myShopProducts'
 
 export const revalidate = 300
@@ -37,7 +38,7 @@ const HOME_ENTRY_ROUTES = [
   },
   {
     title: '想直接看現貨',
-    text: '看一頁購物同步整理的商品、價格與規格，喜歡就能直接下單。',
+    text: '看商城同步整理的商品、價格與規格，喜歡就能直接下單。',
     href: '/shop#products',
     action: '看商城現貨',
   },
@@ -49,54 +50,14 @@ const HOME_ENTRY_ROUTES = [
   },
 ]
 
-const HOME_BRAND_METRICS = [
-  {
-    value: '十幾年',
-    shortLabel: '買賣開料',
-    label: '沉香買賣、開料與現場挑料經驗',
-  },
-  {
-    value: '真料',
-    shortLabel: '說得清楚',
-    label: '原料、香粉、線香與佛珠都說得清楚',
-  },
-  {
-    value: '先問',
-    shortLabel: '用途預算',
-    label: '用途、預算、送禮需求先確認',
-  },
-  {
-    value: '現貨',
-    shortLabel: '規格庫存',
-    label: '商城同步價格、規格與庫存',
-  },
-]
-
-const HOME_TRUST_POINTS = [
-  {
-    title: '不靠玄學',
-    body: '沉香好不好，先看料、香韻、用途與價格，不用神話包裝。',
-  },
-  {
-    title: '原料看得見',
-    body: '香粉、香材、線香與成品都能回到原料邏輯，讓你知道錢花在哪。',
-  },
-  {
-    title: '新手也能懂',
-    body: '把產地、沉水、油線、黏粉比例這些難懂問題，用買香會遇到的情境講清楚。',
-  },
-  {
-    title: '買之前可先聊',
-    body: '不確定用途或預算，先透過 LINE 詢問，再決定要不要買。',
-  },
-]
-
 export default async function HomePage() {
-  const [articles, products, settings] = await Promise.all([
+  const [articles, syncedProducts, fallbackProducts, settings] = await Promise.all([
     sanityClient.fetch<ArticleCardData[]>(HOME_ARTICLES_QUERY).catch(() => []),
+    getMyShopProducts(8).catch(() => []),
     sanityClient.fetch<ProductCardData[]>(HOME_PRODUCTS_QUERY).catch(() => []),
     sanityClient.fetch<any>(SITE_SETTINGS_QUERY).catch(() => null),
   ])
+  const products = syncedProducts.length > 0 ? syncedProducts : fallbackProducts
 
   const faq = settings?.homepageFaq || []
   const founderPhoto = settings?.founderPhoto
@@ -144,7 +105,7 @@ export default async function HomePage() {
             </h1>
             <p className="mb-7 max-w-2xl text-sm leading-relaxed text-cream/86 [overflow-wrap:anywhere] md:text-lg">
               香董把沉香、線香、香粉原料和佛珠選品整理成你看得懂的路線。
-              不講玄，不硬推，先讓你知道香氣、用途、價格差在哪。
+              先讓你知道香氣、用途、價格差在哪。
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
@@ -175,25 +136,6 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-2 sm:mt-12 sm:gap-3 lg:grid-cols-4">
-            {HOME_BRAND_METRICS.map((metric) => (
-              <div
-                key={metric.value}
-                className="min-w-0 rounded-lg border border-cream/20 bg-cream/10 p-3 backdrop-blur-sm md:p-4"
-              >
-                <p className="mb-2 font-serif text-xl text-gold md:text-2xl">
-                  {metric.value}
-                </p>
-                <p className="text-xs leading-relaxed text-cream/78 md:hidden">
-                  {metric.shortLabel}
-                </p>
-                <p className="hidden text-sm leading-relaxed text-cream/78 md:block">
-                  {metric.label}
-                </p>
-              </div>
-            ))}
-          </div>
-
           <div className="mt-6 hidden gap-3 md:grid md:grid-cols-4">
             {heroProducts.slice(0, 3).map((product, index) => (
               <HomeHeroProductTile
@@ -207,7 +149,7 @@ export default async function HomePage() {
               href={SHOP_URL}
               target="_blank"
               rel="noopener"
-              trackingName="首頁一頁購物商城"
+              trackingName="首頁商城"
               trackingType="shop_home"
               className="flex min-h-36 flex-col justify-between rounded-lg border border-gold/35 bg-cream p-4 text-navy transition hover:bg-white"
             >
@@ -223,41 +165,9 @@ export default async function HomePage() {
                 </span>
               </span>
               <span className="text-sm font-medium leading-snug text-goldDark">
-                前往一頁購物商城 →
+                前往商城 →
               </span>
             </TrackedShopLink>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 品牌信任背書 ===== */}
-      <section className="bg-white border-b border-gold/15">
-        <div className="container-x py-12 md:py-14">
-          <div className="grid gap-8 md:grid-cols-12 md:items-start">
-            <div className="md:col-span-4">
-              <p className="mb-3 text-xs tracking-[3px] text-goldDark uppercase">
-                Why Xiangdong
-              </p>
-              <h2 className="mb-4 font-serif text-2xl leading-snug text-navy md:text-3xl">
-                有質感，不是把網站做滿。是把你在意的問題先講清楚。
-              </h2>
-              <p className="text-sm leading-relaxed text-woodLight">
-                香董的首頁要讓人一進來就知道：這不是只會賣香的頁面，而是有人真的懂料、懂用途，也願意把判斷方式講出來。
-              </p>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2 md:col-span-8">
-              {HOME_TRUST_POINTS.map((item) => (
-                <article
-                  key={item.title}
-                  className="rounded-lg border border-gold/20 bg-cream p-5"
-                >
-                  <h3 className="mb-2 text-lg text-navy">{item.title}</h3>
-                  <p className="text-sm leading-relaxed text-woodLight">
-                    {item.body}
-                  </p>
-                </article>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -559,19 +469,23 @@ export default async function HomePage() {
         <div className="flex items-end justify-between mb-8">
           <div>
             <p className="text-xs tracking-[3px] text-goldDark uppercase mb-2">
-              Featured Products
+              Shop Products
             </p>
-            <h2 className="font-serif text-2xl md:text-3xl text-navy">本週精選</h2>
+            <h2 className="font-serif text-2xl md:text-3xl text-navy">商城最新現貨</h2>
             <p className="text-sm text-woodLight mt-2">
-              先看適合誰與香韻，再到香董商城下單或洽詢。
+              依香董商城目前排序顯示，先看品項、價格與用途，再到商城下單或洽詢。
             </p>
           </div>
-          <Link
-            href="/shop"
+          <TrackedShopLink
+            href={SHOP_URL}
+            target="_blank"
+            rel="noopener"
+            trackingName="首頁商城最新現貨"
+            trackingType="shop_home"
             className="hidden sm:inline-flex text-sm text-navy hover:text-goldDark border-b border-gold pb-0.5"
           >
             看全部商品 →
-          </Link>
+          </TrackedShopLink>
         </div>
 
         {products.length > 0 ? (
@@ -582,7 +496,7 @@ export default async function HomePage() {
                   Buying Notes
                 </p>
                 <h3 className="text-xl text-navy mb-4">
-                  本週精選先看三件事
+                  看商城現貨先看三件事
                 </h3>
                 <div className="space-y-4 text-sm text-woodLight leading-relaxed">
                   <p>
@@ -611,12 +525,16 @@ export default async function HomePage() {
                 <ProductCard key={p._id} product={p} />
               ))}
             </div>
-            <Link
-              href="/shop"
+            <TrackedShopLink
+              href={SHOP_URL}
+              target="_blank"
+              rel="noopener"
+              trackingName="首頁商城最新現貨"
+              trackingType="shop_home"
               className="sm:hidden inline-flex text-sm text-navy hover:text-goldDark border-b border-gold pb-0.5 justify-self-start"
             >
               看全部商品 →
-            </Link>
+            </TrackedShopLink>
           </div>
         ) : (
           <EmptyState
@@ -673,7 +591,7 @@ export default async function HomePage() {
             「香董職人老實說｜沉香知識 × 香友交流」
           </a>
           <p className="text-xs text-woodLight/70 mt-2">
-            4,488 位成員的交流社團
+            4,886 位成員的交流社團
           </p>
         </div>
       </section>
