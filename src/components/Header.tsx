@@ -8,7 +8,7 @@ const NAV = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-30 bg-cream/95 backdrop-blur border-b border-gold/20">
+    <header data-site-chrome className="sticky top-0 z-30 bg-cream/95 backdrop-blur border-b border-gold/20">
       <div className="container-x flex items-center justify-between h-16">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl font-serif font-medium text-navy tracking-wider">

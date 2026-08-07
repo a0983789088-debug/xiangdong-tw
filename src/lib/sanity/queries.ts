@@ -1,5 +1,18 @@
 import { groq } from 'next-sanity'
 
+export const STARTER_PAGE_QUERY = groq`*[_type == "starterPage" && _id == "starterPage"][0]{
+  headline,
+  subheadline,
+  heroImage,
+  items[]{ name, sellingPoint, originalPrice },
+  bundlePrice,
+  originalTotal,
+  checkoutUrl,
+  trustStory,
+  communityMemberCount,
+  faq[]{ question, answer }
+}`
+
 /** 全站設定（singleton） */
 export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   siteTitle,

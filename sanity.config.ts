@@ -59,6 +59,14 @@ export default defineConfig({
               ),
             S.divider(),
             S.listItem()
+              .id('starterPage')
+              .title('🎯 入門組合落地頁')
+              .child(
+                S.document()
+                  .schemaType('starterPage')
+                  .documentId('starterPage')
+              ),
+            S.listItem()
               .id('siteSettings')
               .title('⚙️ 網站設定')
               .child(
@@ -74,12 +82,14 @@ export default defineConfig({
     types: schemaTypes,
     // 隱藏 siteSettings 不在「新增」選單出現（singleton）
     templates: (templates) =>
-      templates.filter(({ schemaType }) => schemaType !== 'siteSettings'),
+      templates.filter(
+        ({ schemaType }) => !['siteSettings', 'starterPage'].includes(schemaType)
+      ),
   },
   document: {
     // 禁止「複製/刪除」siteSettings
     actions: (input, context) => {
-      if (context.schemaType === 'siteSettings') {
+      if (['siteSettings', 'starterPage'].includes(context.schemaType)) {
         return input.filter(
           ({ action }) => action && !['duplicate', 'delete'].includes(action)
         )

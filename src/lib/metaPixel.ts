@@ -23,6 +23,16 @@ export function trackMetaPixelLead() {
   return true
 }
 
+export function trackMetaPixelViewContent(value: number) {
+  if (typeof window === 'undefined' || typeof window.fbq !== 'function') return false
+
+  window.fbq('track', 'ViewContent', {
+    value,
+    currency: 'TWD',
+  })
+  return true
+}
+
 export function trackMetaPixelCustomEvent(
   eventName: string,
   params?: MetaPixelParams

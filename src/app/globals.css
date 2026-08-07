@@ -22,6 +22,12 @@ body {
   line-height: 1.75;
 }
 
+/* /starter is an ad landing page: keep the purchase path distraction-free. */
+body:has(.starter-page-root) [data-site-chrome],
+body:has(.starter-page-root) [data-site-floating-cta] {
+  display: none;
+}
+
 /* Headings: Noto Serif TC 給標題增加質感 */
 h1, h2, h3, h4 {
   font-family: var(--font-serif, 'Noto Serif TC'), serif;

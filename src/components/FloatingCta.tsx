@@ -26,6 +26,7 @@ export function FloatingCta({ settings }: { settings: Settings }) {
 
   return (
     <a
+      data-site-floating-cta
       href={cta.url}
       target="_blank"
       rel="noopener"
