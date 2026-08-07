@@ -3,7 +3,7 @@ import { CTA_PRESETS } from '@/lib/cta'
 
 export function Footer() {
   return (
-    <footer className="mt-24 bg-navy text-cream/85">
+    <footer data-site-chrome className="mt-24 bg-navy text-cream/85">
       <div className="container-x py-14">
         <div className="grid md:grid-cols-4 gap-10">
           {/* Brand */}
