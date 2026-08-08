@@ -305,6 +305,42 @@ export default function ShopPage() {
               </div>
             ))}
           </div>
+
+          <div className="mt-8 grid gap-3 md:grid-cols-3">
+            <Link
+              href="/blog/incense-recommendation-guide"
+              className="rounded-lg border border-gold/25 bg-white p-4 hover:border-gold transition-colors"
+            >
+              <h3 className="font-serif text-lg text-navy mb-2">
+                第一次買線香怎麼選
+              </h3>
+              <p className="text-sm text-woodLight leading-relaxed">
+                先看空間大小、煙感、香氣濃淡，再決定日常線香或沉香線香。
+              </p>
+            </Link>
+            <Link
+              href="/blog/how-to-pick-agarwood-beginner-guide"
+              className="rounded-lg border border-gold/25 bg-white p-4 hover:border-gold transition-colors"
+            >
+              <h3 className="font-serif text-lg text-navy mb-2">
+                第一次買沉香怎麼看
+              </h3>
+              <p className="text-sm text-woodLight leading-relaxed">
+                先看來源、香氣、油線和用途，不要只聽故事或只看顏色。
+              </p>
+            </Link>
+            <Link
+              href="/line"
+              className="rounded-lg border border-lineGreen/40 bg-white p-4 hover:border-lineGreen transition-colors"
+            >
+              <h3 className="font-serif text-lg text-navy mb-2">
+                拿不準就先問
+              </h3>
+              <p className="text-sm text-woodLight leading-relaxed">
+                把用途、預算、空間和喜歡的味道整理好，香董先幫你縮小範圍。
+              </p>
+            </Link>
+          </div>
         </div>
       </section>
 
